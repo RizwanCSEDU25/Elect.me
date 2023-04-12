@@ -13,29 +13,6 @@ import Signin from './pages/Signin';
 import { useState } from 'react';
 
 function App() {
-  const [firstName, setfirstName] = useState('')
-  const [lastName, setlastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  async function registerUser(event) {
-    event.preventDefault()
-     fetch('http://localhost:1337/register' , {
-      method: 'Post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password
-      }),
-     }) 
-
-     const data = await Response.JSON()
-     console.log(data)
-  }
 
   return (
       <BrowserRouter> 

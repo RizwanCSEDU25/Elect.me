@@ -1,9 +1,46 @@
-import React from 'react'
+import React,{useState} from 'react'
 
 const Signin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  }
+
+  const handleSubmitChange = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch('http://localhost:3001/api/auth/login' , {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password
+      }),
+     })
+
+     const data = await response.json()
+
+     if(data.token) {
+      localStorage.setItem('token', data.user)
+      window.location.href = '/'
+     }
+     else{
+      alert('Please check your username/password')
+     }
+     
+  }
+
   return (
     <div class="container bg-light my-5 d-flex justify-content-center">
-      <form class="p-3 w-50">
+      <form class="p-3 w-50" onSubmit={handleSubmitChange}>
         <h1 className='d-flex justify-content-center'>Log In</h1>
         <div className="mb-3">
           <label for="email" class="form-label fw-bold">Email address</label>
@@ -12,6 +49,8 @@ const Signin = () => {
             id="email"
             className="form-control"
             placeholder="Enter email"
+            value={email}
+            onChange={handleEmailChange}
           />
         </div>
         <div className="mb-3">
@@ -21,11 +60,13 @@ const Signin = () => {
             id="password"
             className="form-control"
             placeholder="Enter password"
+            value={password}
+            onChange={handlePasswordChange}
           />
         </div>
         <div className="d-grid">
           <button type="submit" className="btn btn-primary">
-            Sign Up
+            Log in
           </button>
         </div>
         <p className="d-flex justify-content-center forgot-password text-right">

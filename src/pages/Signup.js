@@ -24,20 +24,42 @@ const Signup = () => {
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3000/api/auth/register' , {
+
+    const user = await fetch('http://localhost:3001/api/auth/getuser' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstName,
-        lastName,
         email,
-        password
       }),
-     }) 
-     const data = await response.json()
-     console.log(data)
+     })
+    const userstatus = await user.json()
+    console.log(userstatus)
+
+     if(userstatus.status === 'notok'){
+      console.log("hi")
+      alert('a user already exists with the email')
+     }
+     else{
+        const response = await fetch('http://localhost:3001/api/auth/register' , {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password
+          }),
+        }) 
+        const data = await response.json()
+        if(data.token) {
+          localStorage.setItem('token', data.user)
+          window.location.href = '/'
+        }
+    }
      
   }
   return (
