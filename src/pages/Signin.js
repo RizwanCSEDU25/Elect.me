@@ -30,7 +30,7 @@ const Signin = () => {
 
      if(data.token) {
       localStorage.setItem('token', data.user)
-      window.location.href = '/'
+      window.location.href = '/dashboard'
      }
      else{
       alert('Please check your username/password')

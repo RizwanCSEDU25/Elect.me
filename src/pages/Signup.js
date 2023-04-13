@@ -57,7 +57,7 @@ const Signup = () => {
         const data = await response.json()
         if(data.token) {
           localStorage.setItem('token', data.user)
-          window.location.href = '/'
+          window.location.href = '/dashboard'
         }
     }
      

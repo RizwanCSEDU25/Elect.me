@@ -4,17 +4,11 @@ const Create_poll = () => {
   const [title, setTitle] = useState("");
   const [starttime, startTime] = useState("");
   const [endtime, endTime] = useState("");
-  const [votermail, setVoterMail] = useState("");
-  const [voterid, setVoterID] = useState("");
-  const [questions, setQuestions] = useState("");
-  const [counter, setCounter] = useState(0);
-
-  const handleClick = () => {
-    for (let i = 0; i < 1; i++) {
-      setCounter(counter + 1);
-    }
-    //console.log(counter);
-  };
+  // const [votermail, setVoterMail] = useState("");
+  // const [voterid, setVoterID] = useState("");
+  const [voters, setVoters] = useState([{votermail: "", voterid: ""}]);
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState([{option: "", votes: 0}]);
 
 
   const handleTitleChange = (e) => {
@@ -29,29 +23,71 @@ const Create_poll = () => {
     endTime(e.target.value);
   }
 
-  const handleVotermailChange = (e) => {
-    setVoterMail(e.target.value);
-  }
+  // const handleVotermailChange = (e) => {
+  //   setVoterMail(e.target.value);
+  // }
 
-  const handleVoteridChange = (e) => {
-    setVoterID(e.target.value);
+  // const handleVoteridChange = (e) => {
+  //   setVoterID(e.target.value);
+  // }
+
+  const handleAddingVoters = (e, i) => {
+    const votermail = e.target.value
+    const onchangeVal = [...voters]
+    onchangeVal[i]={votermail: votermail}
+    setVoters(onchangeVal);
   }
 
   const handleQuestionChange = (e) => {
-    setQuestions(e.target.value);
+    setQuestion(e.target.value);
   }
 
-  const handleSubmitChange = (e) => {
-    let userInfo = {
-      title: title,
-      startTime: starttime,
-      endTime: endtime,
-      voterMail: votermail,
-      Questions: questions
-    }
-    console.log(userInfo)
-    e.preventDefault();
+  const handleAddingOption = (e, i) => {
+    const option = e.target.value
+    const votes = 0;
+    const onchangeVal = [...options]
+    onchangeVal[i]={option: option, votes: votes}
+    setOptions(onchangeVal);
   }
+
+  const handleAddingOptionField = () => {
+    setOptions([...options, {option: "", votes: 0}])
+  }
+
+  const handleAddingVoterField = () => {
+    setVoters([...voters, {votermail:""}])
+  }
+
+  const handleSubmitChange = async (e) => {
+    e.preventDefault();
+    console.log("first")
+    const response = await fetch('http://localhost:3001/api/poll/add_poll' , {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: title,
+        startTime: starttime,
+        endTime: endtime,
+        voter: voters,
+        question: question,
+        options: options,
+      }),
+    }) 
+    console.log(response)
+    const data = await response.json()
+    console.log(data['voter'][0]._id)
+    const eid = data['id']
+
+    data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index._id+'&vmail='+index.votermail))
+
+    //await fetch('http://localhost:3001/api/mail/?id='+data['id'])
+    // if(data.token) {
+    //   localStorage.setItem('token', data.user)
+    //   window.location.href = '/'
+    // }
+}
 
   return (
       <div class="container bg-light my-5">
@@ -78,35 +114,41 @@ const Create_poll = () => {
               </div>
             </div>
 
-            <div class = "row mb-3">
-            
-            <div class = "col">
-              <button style={{ width: "150px", height: "50px",}} class="btn btn-lg btn-dark" onClick={handleClick}>Add Voter</button>
-
-              {Array.from(Array(counter)).map((c, index) => {
-                return <div>
-                  <label for="votermail" class="form-label fw-bold">Email </label>
-                  <input type="text" id="votermail" class="form-control" placeholder='Email' value={votermail} onChange={handleVotermailChange} required/>
-                  <div class="col">
-                    <label for="voterid" class="form-label fw-bold">Voter ID </label>
-                    <input type="text" id="voterid" class="form-control" placeholder='ID' value={voterid} onChange={handleVoteridChange} required/>
-                  </div>
-
-                  
-                   </div>;
-              })}
-            </div>
+            <div class="col mb-3">
+              <label for="voter" class="form-label fw-bold">Add Voter </label>
+              <button type="button" class="btn btn-sm btn-outline-dark m-3" onClick={handleAddingVoterField}> + </button>
+              {
+                  voters.map((val,i)=>
+                    <div>
+                        <input type="email" id="voter" class="form-control" placeholder='Enter Voter E-mail' value={val.votermail} onChange={(e) => handleAddingVoters(e, i)}/>
+                    </div>
+                  )
+              }
+              
             </div>
             
             <div class="mb-3">
-              <label for="questions" class="form-label fw-bold">Questions </label>
-              <input type="text" id="questions" class="form-control" placeholder='Questions' value={title} onChange={handleQuestionChange} required/>
+              <label for="questions" class="form-label fw-bold">Question </label>
+              <input type="text" id="questions" class="form-control" placeholder='Questions' value={question} onChange={handleQuestionChange} required/>
+            </div>
+
+            <div class="col mb-3">
+              <label for="option" class="form-label fw-bold">Add Options </label>
+              <button type="button" class="btn btn-sm btn-outline-dark m-3" onClick={handleAddingOptionField}> + </button>
+              {
+                  options.map((val,i)=>
+                    <div>
+                        <input type="text" id="option" class="form-control" placeholder='Add Option' value={val.option} onChange={(e) => handleAddingOption(e, i)}/>
+                    </div>
+                  )
+              }
+              
             </div>
 
 
 
             <div class="mb-3 pt-2">
-              <button class="btn btn-lg btn-dark">Continue</button>
+              <button type="submit" class="btn btn-lg btn-dark">Continue</button>
             </div>
           </form>
           </div>

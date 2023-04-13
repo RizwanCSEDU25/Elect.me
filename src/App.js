@@ -10,6 +10,7 @@ import Error from './pages/Error';
 import Navbar from './components/Navbar';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
+import Dashboard from './pages/dashboard'
 import { useState } from 'react';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/create" element={<Create_poll/>} />
             <Route path="/vote" element={<Voting_page/>} />
             <Route path="/help" element={<Help/>} />
+            <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="*" element={<Error/>} />
           </Routes>
         </div>
