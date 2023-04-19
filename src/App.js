@@ -10,7 +10,7 @@ import Error from './pages/Error';
 import Navbar from './components/Navbar';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-import Dashboard from './pages/dashboard'
+import Dashboard from './pages/Dashboard'
 import { useState } from 'react';
 
 function App() {

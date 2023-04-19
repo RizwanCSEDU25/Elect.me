@@ -61,10 +61,13 @@ const Create_poll = () => {
   const handleSubmitChange = async (e) => {
     e.preventDefault();
     console.log("first")
+    const token = localStorage.getItem('token');
+    console.log(token)
     const response = await fetch('http://localhost:3001/api/poll/add_poll' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+token,
       },
       body: JSON.stringify({
         title: title,
@@ -81,6 +84,8 @@ const Create_poll = () => {
     const eid = data['id']
 
     data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index._id+'&vmail='+index.votermail))
+
+    window.location.href = '/dashboard'
 
     //await fetch('http://localhost:3001/api/mail/?id='+data['id'])
     // if(data.token) {

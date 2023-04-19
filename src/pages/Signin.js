@@ -29,7 +29,8 @@ const Signin = () => {
      const data = await response.json()
 
      if(data.token) {
-      localStorage.setItem('token', data.user)
+      localStorage.setItem('token', data.token)
+      console.log(data.token)
       window.location.href = '/dashboard'
      }
      else{
