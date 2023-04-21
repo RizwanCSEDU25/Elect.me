@@ -55,9 +55,11 @@ const Signup = () => {
           }),
         }) 
         const data = await response.json()
+        console.log(data.token)
         if(data.token) {
-          localStorage.setItem('token', data.user)
+          localStorage.setItem('token', data.token)
           window.location.href = '/dashboard'
+          
         }
     }
      

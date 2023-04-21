@@ -28,6 +28,8 @@ const Signin = () => {
 
      const data = await response.json()
 
+     console.log(data)
+
      if(data.token) {
       localStorage.setItem('token', data.token)
       console.log(data.token)
