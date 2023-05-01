@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 
 const Signin = () => {
+  const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,8 +15,8 @@ const Signin = () => {
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
-
-    const response = await fetch('http://localhost:3001/api/auth/login' , {
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/login' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,6 +39,10 @@ const Signin = () => {
      else{
       alert('Please check your username/password')
      }
+    } catch (error) {
+      setError(error.message);
+    }
+    
      
   }
 
@@ -76,6 +81,7 @@ const Signin = () => {
           Not registered yet? <a href="/signup">Register</a>
         </p>
       </form>
+      {error && <p>{error}</p>}
     </div>
   )
 }

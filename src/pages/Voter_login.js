@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 
 const Voter_login = () => {
+    const [error, setError] = useState(null);
     const [electId, setElectId] = useState("");
     const [voterId, setVoterId] = useState("");
   
@@ -14,8 +15,8 @@ const Voter_login = () => {
   
     const handleSubmitChange = async (e) => {
       e.preventDefault();
-  
-      const response = await fetch('http://localhost:3001/api/vote/login' , {
+      try {
+        const response = await fetch('http://localhost:3001/api/vote/login' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,6 +44,10 @@ const Voter_login = () => {
       else if(voterStatus.status==="finished"){
         alert('Election already finished')
     }
+      } catch (error) {
+        setError(error.message);
+      }
+      
        
     }
   
@@ -80,6 +85,7 @@ const Voter_login = () => {
             </button>
           </div>
         </form>
+        {error && <p>{error}</p>}
       </div>
     )
 }

@@ -61,6 +61,7 @@ const Voting_page = () => {
      }
     } catch (error) {
       console.log(error)
+      setError(error.message);
     }
   }
 

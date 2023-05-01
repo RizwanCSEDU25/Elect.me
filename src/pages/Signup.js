@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const Signup = () => {
+  const [error, setError] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLirstName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,8 +25,8 @@ const Signup = () => {
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
-
-    const user = await fetch('http://localhost:3001/api/auth/getuser' , {
+    try {
+      const user = await fetch('http://localhost:3001/api/auth/getuser' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,6 +63,10 @@ const Signup = () => {
           
         }
     }
+    } catch (error) {
+      setError(error.message);
+    }
+    
      
   }
   return (
@@ -115,6 +120,7 @@ const Signup = () => {
           Already registered? <a href="/signin"> Sign in</a>
         </p>
       </form>
+      {error && <p>{error}</p>}
     </div>
     
   )

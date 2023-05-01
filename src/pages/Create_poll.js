@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const Create_poll = () => {
+  const [error, setError] = useState(null);
   const [title, setTitle] = useState("");
   const [starttime, startTime] = useState("");
   const [endtime, endTime] = useState("");
@@ -33,19 +34,25 @@ const Create_poll = () => {
 
   const handleAddingVoters = async(e, i) => {
     if(e.target.value !== ""){
-      const votermail = e.target.value
-      const response = await fetch('http://localhost:3001/api/poll/generate' , {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const data = await response.json();
-    const voterid = data.id;
-    console.log(voterid)
-      const onchangeVal = [...voters]
-      onchangeVal[i]={votermail: votermail, voterid: voterid}
-      setVoters(onchangeVal);
+      const votermail = e.target.value;
+      try {
+        const response = await fetch('http://localhost:3001/api/poll/generate' , {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        const voterid = data.id;
+        console.log(voterid)
+        const onchangeVal = [...voters]
+        onchangeVal[i]={votermail: votermail, voterid: voterid}
+        setVoters(onchangeVal);
+      } catch (error) {
+        setError(error.message);
+      }
+      
+        
     }
     
   }
@@ -89,29 +96,35 @@ const Create_poll = () => {
     console.log("first")
     const token = localStorage.getItem('token');
     console.log(token)
-    const response = await fetch('http://localhost:3001/api/poll/add_poll' , {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+token,
-      },
-      body: JSON.stringify({
-        title: title,
-        startTime: starttime,
-        endTime: endtime,
-        voter: voters,
-        question: question,
-        options: options
-      }),
-    }) 
-    console.log(response)
-    const data = await response.json()
-    console.log(data['voter'][0]._id)
-    const eid = data['id']
+    try {
+      const response = await fetch('http://localhost:3001/api/poll/add_poll' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+token,
+        },
+        body: JSON.stringify({
+          title: title,
+          startTime: starttime,
+          endTime: endtime,
+          voter: voters,
+          question: question,
+          options: options
+        }),
+      }) 
+      console.log(response)
+      const data = await response.json()
+      console.log(data['voter'][0]._id)
+      const eid = data['id']
+      data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail))
 
-    data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail))
+      window.location.href = '/dashboard'
+    } catch (error) {
+      setError(error.message);
+    }
+    
 
-    window.location.href = '/dashboard'
+    
 
     //await fetch('http://localhost:3001/api/mail/?id='+data['id'])
     // if(data.token) {
@@ -183,8 +196,9 @@ const Create_poll = () => {
               <button type="submit" class="btn btn-lg btn-dark">Continue</button>
             </div>
           </form>
-          </div>
           
+          </div>
+          {error && <p>{error}</p>}
       </div>
   )
 }
