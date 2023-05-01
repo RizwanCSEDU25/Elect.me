@@ -52,7 +52,7 @@
 .poll {
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  width: 500px;
   gap: 0.5rem;
   background-color: #2c2c2c;
   color: white;
@@ -68,6 +68,10 @@
 }
 .poll__time {
   color: rgba(255, 255, 255, 0.795);
+}
+
+a {
+  text-decoration: none;
 }
 
 

@@ -31,11 +31,23 @@ const Create_poll = () => {
   //   setVoterID(e.target.value);
   // }
 
-  const handleAddingVoters = (e, i) => {
-    const votermail = e.target.value
-    const onchangeVal = [...voters]
-    onchangeVal[i]={votermail: votermail}
-    setVoters(onchangeVal);
+  const handleAddingVoters = async(e, i) => {
+    if(e.target.value !== ""){
+      const votermail = e.target.value
+      const response = await fetch('http://localhost:3001/api/poll/generate' , {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    const voterid = data.id;
+    console.log(voterid)
+      const onchangeVal = [...voters]
+      onchangeVal[i]={votermail: votermail, voterid: voterid}
+      setVoters(onchangeVal);
+    }
+    
   }
 
   const handleQuestionChange = (e) => {
@@ -43,11 +55,25 @@ const Create_poll = () => {
   }
 
   const handleAddingOption = (e, i) => {
-    const option = e.target.value
-    const votes = 0;
-    const onchangeVal = [...options]
-    onchangeVal[i]={option: option, votes: votes}
-    setOptions(onchangeVal);
+    // if(e.target.value !== null){
+      const option = e.target.value
+      console.log(option)
+      const votes = 0;
+      const onchangeVal = [...options]
+      if(option !== ""){
+        onchangeVal[i]={option: option, votes: votes}
+      }
+      setOptions(onchangeVal);
+    // }
+    
+  }
+
+  const handleRemovingOptionField = (e, i) => {
+      const deleteVal = [...options]
+      deleteVal.splice(i,1)
+      setOptions(deleteVal);
+    // }
+    
   }
 
   const handleAddingOptionField = () => {
@@ -55,7 +81,7 @@ const Create_poll = () => {
   }
 
   const handleAddingVoterField = () => {
-    setVoters([...voters, {votermail:""}])
+    setVoters([...voters, {votermail:"", voterid: ""}])
   }
 
   const handleSubmitChange = async (e) => {
@@ -75,7 +101,7 @@ const Create_poll = () => {
         endTime: endtime,
         voter: voters,
         question: question,
-        options: options,
+        options: options
       }),
     }) 
     console.log(response)
@@ -83,7 +109,7 @@ const Create_poll = () => {
     console.log(data['voter'][0]._id)
     const eid = data['id']
 
-    data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index._id+'&vmail='+index.votermail))
+    data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail))
 
     window.location.href = '/dashboard'
 
@@ -125,7 +151,7 @@ const Create_poll = () => {
               {
                   voters.map((val,i)=>
                     <div>
-                        <input type="email" id="voter" class="form-control" placeholder='Enter Voter E-mail' value={val.votermail} onChange={(e) => handleAddingVoters(e, i)}/>
+                        <input type="email" id="voter" class="form-control" placeholder='Enter Voter E-mail' value={val.votermail} onChange={(e) => handleAddingVoters(e, i)} required/>
                     </div>
                   )
               }
@@ -142,8 +168,9 @@ const Create_poll = () => {
               <button type="button" class="btn btn-sm btn-outline-dark m-3" onClick={handleAddingOptionField}> + </button>
               {
                   options.map((val,i)=>
-                    <div>
+                  <div style={{display: 'flex'}}>
                         <input type="text" id="option" class="form-control" placeholder='Add Option' value={val.option} onChange={(e) => handleAddingOption(e, i)}/>
+                        <button type="button" class="btn btn-sm btn-outline-dark m-3" onClick={(e) => handleRemovingOptionField(e, i)}> - </button>
                     </div>
                   )
               }

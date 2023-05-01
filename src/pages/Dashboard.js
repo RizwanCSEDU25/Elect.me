@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [polls, setPolls] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,32 +29,38 @@ const Dashboard = () => {
       setIsLoading(false);
     });
   }, []);
+
+  const handleClick = (id) => {
+    navigate('/result',{state: {id: id}});
+  }
   // console.log(new Date.toLocaleString())
   const pollElements = polls && polls.map((poll) => 
   <div className='d-flex justify-content-center'>
-    <article className="poll m-4 d-flex justify-content-center">
-      <h3 className="poll__name ">{poll.title}</h3>
-      <p className="poll__time">Starting Time: {new Date(poll.startTime).toLocaleTimeString(
-          'en-us',
-          {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-          }
-        )}</p>
-      <p className="poll__time">Ending Time: {new Date(poll.endTime).toLocaleTimeString(
-          'en-us',
-          {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-          }
-        )}</p>
-    </article>
+    <a href="#" onClick={() => handleClick(poll._id)}>
+        <article className="poll m-4 d-flex justify-content-center">
+          <h3 className="poll__name ">{poll.title}</h3>
+          <p className="poll__time">Starting Time: {new Date(poll.startTime).toLocaleTimeString(
+              'en-us',
+              {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+              }
+            )}</p>
+          <p className="poll__time">Ending Time: {new Date(poll.endTime).toLocaleTimeString(
+              'en-us',
+              {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+              }
+            )}</p>
+        </article>
+    </a>
   </div>
     );
   // console.log(poll)

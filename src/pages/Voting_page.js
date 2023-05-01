@@ -1,50 +1,90 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 
 const Voting_page = () => {
-  const [electionID, setElectionID] = useState("");
-  const [voterID, setVoterID] = useState("");
+  let option;
+  const {electId, voterId} = useParams();
 
-  const handleElectionIDChange = (e) => {
-    setElectionID(e.target.value);
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // const token = localStorage.getItem('token');
+  useEffect(() => {
+    fetch('http://localhost:3001/api/vote/poll/'+electId,{
+      method: 'GET',
+      headers: {
+      'Content-Type': 'application/json',
+      // 'Authorization': 'Bearer '+token,
+    },
+  },
+    ).then((res) => {
+      //return res.json();
+      if(!res.ok){
+        console.log(res)
+        throw Error("fetching is not successful");
+      }
+      else{
+        return res.json();
+      }
+    }).then((data) => {
+      setQuestion(data.question);
+      setOptions(data.options);
+      setIsLoading(false);
+      setError(null);
+    }).catch((error) => {
+      setError(error.message);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const handleClick = (chosen) => { 
+    option = chosen;
+    
   }
 
-  const handleVoterIDChange = (e) => {
-    setVoterID(e.target.value);
-  }
+  const handleSubmit = async() => {
+    try {
+      const response = await fetch('http://localhost:3001/api/poll/addVote/'+electId+'/'+voterId+'/'+ option, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+     })
 
-  const handleSubmitChange = (e) => {
-    let voterInfo = {
-      electionID,
-      voterID
+     const data = await response.json();
+     if(data.status === "finished"){
+      alert('Election already finished')
+     }
+     if(data.status === "voted"){
+      alert('You have already voted once')
+     }
+    } catch (error) {
+      console.log(error)
     }
-    console.log(voterInfo)
-    e.preventDefault();
-  }  
+  }
+
+  const voteElements = options && options.map((index) =>
+  <div className='d-flex justify-content-center'>
+    <a href="#" onClick={() => handleClick(index.option)}>
+      <article className="poll m-4 d-flex justify-content-center">
+        <p className="poll__name text-center fs-4 fw-bold">{index.option}</p>
+      </article>
+    </a>
+    
+  </div>
+    );
+
   return (
-        <div class="container bg-light my-5">
-          <div class="title text-center mb-3 pt-3">
-              <h1>Log in with Voter ID</h1>
-          </div>
-          
-          <div className='d-flex justify-content-center'>
-          <form class="p-3 w-50" onSubmit={handleSubmitChange}>
-            <div class="mb-3">
-              <label for="electionID" class="form-label fw-bold">Election ID </label>
-              <input type="text" id="electionID" class="form-control" placeholder='e.g. ghhZfgh' value={electionID} onChange={handleElectionIDChange} required/>
-            </div>
-
-            <div class="mb-3">
-              <label for="voterID" class="form-label fw-bold"> Voter ID </label>
-              <input type="text" id="voterID" class="form-control" placeholder='e.g. fheCbv' value={voterID} onChange={handleVoterIDChange} required/>
-            </div>
-
-            <div class="mb-3 pt-2">
-              <button class="btn btn-lg btn-dark">Continue</button>
-            </div>
-          </form>
-          </div>
-          
-      </div>
+       <div>
+        {error && <p>{error}</p>}
+      {isLoading && <p>loading</p>}
+        <h1 className='text-center'>{question}</h1>
+        {voteElements}
+        <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+              Submit
+            </button>
+       </div>
   )
 }
 
