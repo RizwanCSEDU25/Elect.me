@@ -38,9 +38,9 @@ const Voting_page = () => {
     });
   }, []);
 
-  const handleClick = (chosen) => { 
+  const handleClick = (e, chosen) => { 
     option = chosen;
-    
+    e.preventDefault();
   }
 
   const handleSubmit = async() => {
@@ -67,7 +67,7 @@ const Voting_page = () => {
 
   const voteElements = options && options.map((index) =>
   <div className='d-flex justify-content-center'>
-    <a href="#" onClick={() => handleClick(index.option)}>
+    <a href="#" onClick={(e) => handleClick(e, index.option)}>
       <article className="poll m-4 d-flex justify-content-center">
         <p className="poll__name text-center fs-4 fw-bold">{index.option}</p>
       </article>

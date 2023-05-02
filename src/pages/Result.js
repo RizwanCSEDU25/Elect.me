@@ -1,19 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import { useLocation } from 'react-router-dom'
-let id;
+// let id;
 const Result = () => {
     
     const location = useLocation();
-    
+    console.log(location.state.id)
+    const id = location.state.id;
 
   const [result, setResult] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
   useEffect(() => {
-    if(location.state !== null){
-      id = location.state.id;
-    }
+    // if(location.state !== null){
+    //   id = location.state.id;
+    // }
     fetch('http://localhost:3001/api/poll/result/'+id,{headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+token,

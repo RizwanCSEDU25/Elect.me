@@ -36,9 +36,13 @@ const Dashboard = () => {
   // console.log(new Date.toLocaleString())
   const pollElements = polls && polls.map((poll) => 
   <div className='d-flex justify-content-center'>
-    <a href="#" onClick={() => handleClick(poll._id)}>
-        <article className="poll m-4 d-flex justify-content-center">
+    {/* <a href="#" onClick={() => handleClick(poll._id)}> */}
+        <article style={{position: 'relative'}} className="poll m-4 d-flex justify-content-center">
           <h3 className="poll__name ">{poll.title}</h3>
+          <button type="button" style={{position: 'absolute', top:10, right: 10}} className="btn btn-primary" onClick={() => handleClick(poll._id)}>
+              Result
+            </button>
+          
           <p className="poll__time">Starting Time: {new Date(poll.startTime).toLocaleTimeString(
               'en-us',
               {
@@ -59,8 +63,9 @@ const Dashboard = () => {
                 minute: 'numeric',
               }
             )}</p>
+            
         </article>
-    </a>
+    {/* </a> */}
   </div>
     );
   // console.log(poll)
