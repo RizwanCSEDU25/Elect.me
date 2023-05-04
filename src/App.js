@@ -14,12 +14,19 @@ import PreventLoginPage from './components/Prevent';
 import Voter_login from './pages/Voter_login';
 import Voting_page from './pages/Voting_page';
 import Result from './pages/Result';
+import { createContext } from 'react';
+import { useReducer } from 'react';
+import { initialState,reducer } from './reducer/UseReducer';
 
-function App() {
+export const userContext = createContext();
+function App () {
+ //const userContext = createContext();
+ const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
       <BrowserRouter> 
         
+        <userContext.Provider value={{state,dispatch}}>
         <Navbar />
         
         <div className='mydiv'>
@@ -41,6 +48,7 @@ function App() {
             <Route path="*" element={<Error/>} />
           </Routes>
         </div>
+        </userContext.Provider>
             
       </BrowserRouter>
   );

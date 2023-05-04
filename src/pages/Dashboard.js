@@ -78,7 +78,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1 className='text-center'>Your Polls</h1>
-      <button onClick={handleLogout}>Log out</button>
+      {/*<button onClick={handleLogout}>Log out</button>*/}
       {error && <p>{error}</p>}
       {isLoading && <p>loading</p>}
       {pollElements}
