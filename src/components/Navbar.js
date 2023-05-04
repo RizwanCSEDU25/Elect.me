@@ -2,6 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
+  // const handleLogout = () => {
+  //   localStorage.removeItem('jwt'); // Remove the JWT from local storage
+  //   // Perform any other log out actions, such as redirecting to a log in page
+  // };
   return (
     <div class="container-fluid bg-dark">
             <nav class="navbar navbar-expand-lg bg-dark navbar-dark text-white fixed-top" style={{paddingLeft: "5rem", paddingRight: "5rem"}}>
@@ -18,6 +22,7 @@ const Navbar = () => {
                         <li class="nav-item"><Link class="nav-link" to="/create"><a>Create Poll</a></Link></li>
                         <li class="nav-item"><Link class="nav-link" to="/vote"><a>Vote</a></Link></li>
                         <li class="nav-item"><Link class="nav-link" to="/help">Help</Link></li>
+                        {/* <li class="nav-item"><button class="button" onClick={handleLogout}>Log out</button></li> */}
                     </ul>
                 </div>
             </nav>

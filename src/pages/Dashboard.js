@@ -33,6 +33,12 @@ const Dashboard = () => {
   const handleClick = (id) => {
     navigate('/result',{state: {id: id}});
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    console.log(localStorage) // Remove the JWT from local storage
+    // Perform any other log out actions, such as redirecting to a log in page
+  };
   // console.log(new Date.toLocaleString())
   const pollElements = polls && polls.map((poll) => 
   <div className='d-flex justify-content-center'>
@@ -72,6 +78,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1 className='text-center'>Your Polls</h1>
+      <button onClick={handleLogout}>Log out</button>
       {error && <p>{error}</p>}
       {isLoading && <p>loading</p>}
       {pollElements}
