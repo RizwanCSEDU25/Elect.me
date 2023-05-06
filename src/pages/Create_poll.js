@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 
 const Create_poll = () => {
+  const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [title, setTitle] = useState("");
   const [starttime, startTime] = useState("");
   const [endtime, endTime] = useState("");
-  // const [votermail, setVoterMail] = useState("");
-  // const [voterid, setVoterID] = useState("");
   const [voters, setVoters] = useState([{votermail: "", voterid: ""}]);
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([{option: "", votes: 0}]);
+
+  const re = /\S+@\S+\.\S+/;
 
 
   const handleTitleChange = (e) => {
@@ -24,18 +25,13 @@ const Create_poll = () => {
     endTime(e.target.value);
   }
 
-  // const handleVotermailChange = (e) => {
-  //   setVoterMail(e.target.value);
-  // }
-
-  // const handleVoteridChange = (e) => {
-  //   setVoterID(e.target.value);
-  // }
-
   const handleAddingVoters = async(e, i) => {
-    if(e.target.value !== ""){
+    let voterid;
+    // if(e.target.value !== ""){
       const votermail = e.target.value;
+      
       try {
+        if(re.test(e.target.value)){
         const response = await fetch('http://localhost:3001/api/poll/generate' , {
           method: 'GET',
           headers: {
@@ -43,8 +39,9 @@ const Create_poll = () => {
           },
         });
         const data = await response.json();
-        const voterid = data.id;
+        voterid = data.id;
         console.log(voterid)
+      }
         const onchangeVal = [...voters]
         onchangeVal[i]={votermail: votermail, voterid: voterid}
         setVoters(onchangeVal);
@@ -53,9 +50,17 @@ const Create_poll = () => {
       }
       
         
-    }
+    // }
     
   }
+
+  const handleRemovingVoterField = (e, i) => {
+    const deleteVal = [...voters]
+    deleteVal.splice(i,1)
+    setVoters(deleteVal);
+  // }
+  
+}
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
@@ -93,6 +98,7 @@ const Create_poll = () => {
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
+    setMessage("Please wait...Poll is being created");
     console.log("first")
     const token = localStorage.getItem('token');
     console.log(token)
@@ -114,10 +120,16 @@ const Create_poll = () => {
       }) 
       console.log(response)
       const data = await response.json()
+      if(data.status === "notconfirmed"){
+        setMessage("");
+        alert("Please verify your email by clicking on the link sent to your email address");
+      }
       console.log(data['voter'][0]._id)
       const eid = data['id']
       data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail))
-
+      if(eid){
+        setMessage("Poll created successfully! Email containing election id & voter id sent to voters");
+      }
       window.location.href = '/dashboard'
     } catch (error) {
       setError(error.message);
@@ -163,8 +175,9 @@ const Create_poll = () => {
               <button type="button" class="btn btn-sm btn-outline-dark m-3" onClick={handleAddingVoterField}> + </button>
               {
                   voters.map((val,i)=>
-                    <div>
+                    <div style={{display: 'flex'}}>
                         <input type="email" id="voter" class="form-control" placeholder='Enter Voter E-mail' value={val.votermail} onChange={(e) => handleAddingVoters(e, i)} required/>
+                        <button type="button" class="btn btn-sm btn-outline-dark m-3" onClick={(e) => handleRemovingVoterField(e, i)}> - </button>
                     </div>
                   )
               }
@@ -182,7 +195,7 @@ const Create_poll = () => {
               {
                   options.map((val,i)=>
                   <div style={{display: 'flex'}}>
-                        <input type="text" id="option" class="form-control" placeholder='Add Option' value={val.option} onChange={(e) => handleAddingOption(e, i)}/>
+                        <input type="text" id="option" class="form-control" placeholder='Add Option' value={val.option} onChange={(e) => handleAddingOption(e, i)} required/>
                         <button type="button" class="btn btn-sm btn-outline-dark m-3" onClick={(e) => handleRemovingOptionField(e, i)}> - </button>
                     </div>
                   )
@@ -194,6 +207,7 @@ const Create_poll = () => {
 
             <div class="mb-3 pt-2">
               <button type="submit" class="btn btn-lg btn-dark">Continue</button>
+              {message && <p>{message}</p>}
             </div>
           </form>
           

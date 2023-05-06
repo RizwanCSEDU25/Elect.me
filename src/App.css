@@ -60,6 +60,17 @@
   border-radius: 1rem;
   transition: all 0.3s;
 }
+.clicked {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  gap: 0.5rem;
+  background-color: #059936;
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: all 0.3s;
+}
 .poll:hover {
   background-color: black;
 }

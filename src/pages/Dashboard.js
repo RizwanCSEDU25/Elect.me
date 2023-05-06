@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import Skeleton from './skeleton';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [polls, setPolls] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isPollsLoaded, setIsPollsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
   useEffect(() => {
@@ -25,7 +23,6 @@ const Dashboard = () => {
     }).then((data) => {
       setPolls(data.polls);
       setIsLoading(false);
-      setIsPollsLoaded(true);
       setError(null);
     }).catch((error) => {
       setError(error.message);
@@ -77,19 +74,16 @@ const Dashboard = () => {
     {/* </a> */}
   </div>
     );
-
-
   // console.log(poll)
   return (
     <div>
-      
-      {/*<button onClick={handleLogout}>Log out</button>*/}
+      <h1 className='text-center'>Your Polls</h1>
+      <button onClick={handleLogout}>Log out</button>
       {error && <p>{error}</p>}
-      {isLoading && [1,2,3,4,5,6,7].map((n) => <Skeleton    key={n}/>)}
-      {isPollsLoaded && <h1 className="text-center">Your Polls</h1>}
+      {isLoading && <p>loading</p>}
       {pollElements}
     </div>
   )
-      }
+}
 
 export default Dashboard
