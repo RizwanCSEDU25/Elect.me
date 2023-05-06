@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useLocation } from 'react-router-dom'
+import Skeleton from './skeleton';
 // let id;
 const Result = () => {
     
@@ -10,6 +11,7 @@ const Result = () => {
   const [result, setResult] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isResultLoaded, setIsResultLoaded] = useState(false);
   const token = localStorage.getItem('token');
   useEffect(() => {
     // if(location.state !== null){
@@ -31,6 +33,7 @@ const Result = () => {
       if(data.status==="ok"){
         setResult(data.options);
         setIsLoading(false);
+        setIsResultLoaded(true);
         setError(null);
       }else if(data.status === "notok"){
         setError("Election has not finished yet");
@@ -57,10 +60,10 @@ const Result = () => {
 
   return (
     <div>
-      <h1 className='text-center'>Result</h1>
+      
         {error && <p>{error}</p>}
-      {isLoading && <p>loading</p>}
-        
+      {isLoading && [1,2,3,4,5,6,7].map((n) => <Skeleton    key={n}/>)}
+      {isResultLoaded && <h1 className="text-center">Result</h1>}
         {resultElements}
        </div>
   )

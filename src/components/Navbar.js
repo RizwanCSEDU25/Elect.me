@@ -75,6 +75,7 @@ const Navbar = () => {
                       <ul class="navbar-nav ms-auto" textAlign= 'center' >
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'center'}}>
                       <li class="nav-item"><Link class="nav-link active" to="/"> <a>Home</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/dashboard"> <a>Dashboard</a></Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/create"><a>Create Poll</a></Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/vote"><a>Vote</a></Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/help">Help</Link></li>

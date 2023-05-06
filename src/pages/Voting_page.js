@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
+import Skeleton from './skeleton';
 
 const Voting_page = () => {
   let option;
@@ -8,6 +9,7 @@ const Voting_page = () => {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const[isVote, setIsVote] = useState(false);
   const [error, setError] = useState(null);
   // const token = localStorage.getItem('token');
   useEffect(() => {
@@ -31,6 +33,7 @@ const Voting_page = () => {
       setQuestion(data.question);
       setOptions(data.options);
       setIsLoading(false);
+      setIsVote(true);
       setError(null);
     }).catch((error) => {
       setError(error.message);
@@ -79,8 +82,8 @@ const Voting_page = () => {
   return (
        <div>
         {error && <p>{error}</p>}
-      {isLoading && <p>loading</p>}
-        <h1 className='text-center'>{question}</h1>
+        {isLoading &&  [1,2,3,4,5,6,7].map((n) => <Skeleton    key={n}/>)}
+        {isVote && <h1 className='text-center'>{question}</h1>}
         {voteElements}
         <button type="button" className="btn btn-primary" onClick={handleSubmit}>
               Submit

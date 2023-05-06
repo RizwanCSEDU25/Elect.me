@@ -74,5 +74,69 @@ a {
   text-decoration: none;
 }
 
+.skeleton-blog{
+  margin-bottom: 2em;
+  animation:loading 4s infinite;
+}
+  
+ .skeleton-avatar{
+  background: #E5E4E2;
+  height: 60px;
+   width: 60px;
+   border-radius: 50%;
+ }
+ .skeleton-author{
+  background: #E5E4E2;
+  height: 30px;
+  width: 150px;
+  margin-left: 1rem;
+  border-radius: 6px;
+ }
+ .skeleton-image{
+  height: 150px;
+  width: 500px;
+  border-radius: 6px;
+  /*background: #E5E4E2;*/
+  margin-top: 10px;
+  margin-left: auto;
+  margin-bottom: auto;
+  margin-right: auto ;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+ }
 
+ .skeleton-footer{
+  height: 30px;
+  width: 30px;
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+ }
 
+ @keyframes shine {
+  to {
+    background-position: 100% 0;
+  }
+}
