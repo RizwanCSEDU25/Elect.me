@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLirstName] = useState("");
@@ -25,6 +26,7 @@ const Signup = () => {
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const user = await fetch('http://localhost:3001/api/auth/getuser' , {
       method: 'POST',
@@ -60,10 +62,18 @@ const Signup = () => {
         if(data.token) {
           localStorage.setItem('token', data.token)
           window.location.href = '/dashboard'
-          
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         }
+        else{
+          setLoading(false);
+          alert('Something went wrong...Please try again!')
+    
+         }
     }
     } catch (error) {
+      setLoading(false);
       setError(error.message);
     }
     
@@ -112,8 +122,12 @@ const Signup = () => {
           />
         </div>
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Sign Up
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? (
+                <div className="loading-indicator"></div>
+              ) : (
+                'Sign up'
+              )}
           </button>
         </div>
         <p className="d-flex justify-content-center forgot-password text-right">

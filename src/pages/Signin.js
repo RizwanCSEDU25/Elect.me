@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { userContext } from '../App';
 
 const Signin = () => {
-
+  const [loading, setLoading] = useState(false);
   const {state,dispatch} = useContext(userContext);
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
@@ -19,6 +19,7 @@ const Signin = () => {
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch('http://localhost:3001/api/auth/login' , {
       method: 'POST',
@@ -40,11 +41,17 @@ const Signin = () => {
       localStorage.setItem('token', data.token)
       console.log(data.token)
       window.location.href = '/dashboard'
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
      }
      else{
+      setLoading(false);
       alert('Please check your username/password')
+
      }
     } catch (error) {
+      setLoading(false);
       setError(error.message);
     }
     
@@ -78,8 +85,12 @@ const Signin = () => {
           />
         </div>
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Log in
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? (
+                <div className="loading-indicator"></div>
+              ) : (
+                'Log in'
+              )}
           </button>
         </div>
         <p className="d-flex justify-content-center forgot-password text-right">

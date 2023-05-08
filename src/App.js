@@ -17,6 +17,7 @@ import Result from './pages/Result';
 import { createContext } from 'react';
 import { useReducer } from 'react';
 import { initialState,reducer } from './reducer/UseReducer';
+import VoterList from './pages/VoterList';
 
 export const userContext = createContext();
 function App () {
@@ -43,6 +44,7 @@ function App () {
             <Route path="/*" element={<PrivateOutlet />}>
               <Route path="dashboard" element={<Dashboard/>} />
               <Route path="result" element={<Result/>} />
+              <Route path="voterlist" element={<VoterList/>} />
               <Route path="create" element={<Create_poll/>} />
             </Route>
             <Route path="*" element={<Error/>} />

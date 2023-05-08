@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 
 const Voter_login = () => {
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [electId, setElectId] = useState("");
     const [voterId, setVoterId] = useState("");
@@ -15,6 +16,7 @@ const Voter_login = () => {
   
     const handleSubmitChange = async (e) => {
       e.preventDefault();
+      setLoading(true);
       try {
         const response = await fetch('http://localhost:3001/api/vote/login' , {
         method: 'POST',
@@ -31,20 +33,28 @@ const Voter_login = () => {
 
        if(voterStatus.status==="ok"){
         window.location.href = '/cast/'+electId+'/'+voterId
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
        }
        else if(voterStatus.status==="notok"){
+            setLoading(false);
             alert('You may have already voted once')
         }
         else if(voterStatus.status==="wronginfo"){
+          setLoading(false);
           alert('Please check your election ID / Voter ID')
       }
         else if(voterStatus.status==="notstarted"){
+          setLoading(false);
           alert('Election has not started yet')
       }
       else if(voterStatus.status==="finished"){
+        setLoading(false);
         alert('Election already finished')
     }
       } catch (error) {
+        setLoading(false);
         setError(error.message);
       }
       
@@ -80,8 +90,12 @@ const Voter_login = () => {
             />
           </div>
           <div className="d-grid mb-3 pt-2">
-            <button type="submit" className="btn btn-primary">
-              Log in
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? (
+                  <div className="loading-indicator"></div>
+                ) : (
+                  'Log in'
+                )}
             </button>
           </div>
         </form>

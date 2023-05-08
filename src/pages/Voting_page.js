@@ -5,6 +5,7 @@ import Skeleton from './skeleton';
 const Voting_page = () => {
   const {electId, voterId} = useParams();
 
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [clicked, setClicked] = useState(-1);
   const [question, setQuestion] = useState("");
@@ -50,6 +51,7 @@ const Voting_page = () => {
   }
 
   const handleSubmit = async() => {
+    setLoading(true);
     console.log(clicked)
     console.log(option)
     try {
@@ -61,16 +63,25 @@ const Voting_page = () => {
      })
 
      const data = await response.json();
-     if(data.status === "success")setMessage("You have successfully voted "+option);
-     if(data.status === "failed")setMessage("Failed to vote...try again");
+     if(data.status === "success"){
+      setLoading(false);
+      setMessage("You have successfully voted "+option);
+     }
+     if(data.status === "failed"){
+      setLoading(false);
+      setMessage("Failed to vote...try again");
+     }
      if(data.status === "finished"){
+      setLoading(false);
       alert('Election already finished')
      }
      if(data.status === "voted"){
+      setLoading(false);
       alert('You have already voted once')
      }
     } catch (error) {
       console.log(error)
+      setLoading(false);
       setError(error.message);
     }
   }
@@ -95,7 +106,13 @@ const Voting_page = () => {
         {isLoading &&  [1,2,3,4,5,6,7].map((n) => <Skeleton    key={n}/>)}
         {isVote && <h1 className='text-center'>{question}</h1>}
         {voteElements}
-        <button type="btn" style={{margin: 'auto',display: 'flex',justifyContent: 'center', alignItems: 'center'}} className="btn btn-dark justify-content-center" onClick={handleSubmit}>Submit</button>
+        <button type="btn" style={{margin: 'auto',display: 'flex',justifyContent: 'center', alignItems: 'center'}} className="btn btn-dark justify-content-center" onClick={handleSubmit} disabled={loading}>
+              {loading ? (
+                <div className="loading-indicator"></div>
+              ) : (
+                'Submit'
+              )}
+        </button>
         {message && <p>{message}</p>}
        </div>
   )

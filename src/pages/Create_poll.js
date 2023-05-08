@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const Create_poll = () => {
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [title, setTitle] = useState("");
@@ -43,8 +44,10 @@ const Create_poll = () => {
         console.log(voterid)
       }
         const onchangeVal = [...voters]
-        onchangeVal[i]={votermail: votermail, voterid: voterid}
-        setVoters(onchangeVal);
+        if(!onchangeVal.some((obj) => obj.votermail === votermail)){
+          onchangeVal[i]={votermail: votermail, voterid: voterid}
+          setVoters(onchangeVal);
+        }
       } catch (error) {
         setError(error.message);
       }
@@ -98,6 +101,7 @@ const Create_poll = () => {
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setMessage("Please wait...Poll is being created");
     console.log("first")
     const token = localStorage.getItem('token');
@@ -131,7 +135,11 @@ const Create_poll = () => {
         setMessage("Poll created successfully! Email containing election id & voter id sent to voters");
       }
       window.location.href = '/dashboard'
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     } catch (error) {
+      setLoading(false);
       setError(error.message);
     }
     
@@ -206,7 +214,13 @@ const Create_poll = () => {
 
 
             <div class="mb-3 pt-2">
-              <button type="submit" class="btn btn-lg btn-dark">Continue</button>
+              <button type="submit" class="btn btn-lg btn-dark" disabled={loading}>
+                {loading ? (
+                  <div className="loading-indicator"></div>
+                ) : (
+                  'Continue'
+                )}
+              </button>
               {message && <p>{message}</p>}
             </div>
           </form>
