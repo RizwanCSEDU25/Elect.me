@@ -44,6 +44,7 @@ function App () {
               <Route path="dashboard" element={<Dashboard/>} />
               <Route path="result" element={<Result/>} />
               <Route path="create" element={<Create_poll/>} />
+              
             </Route>
             <Route path="*" element={<Error/>} />
           </Routes>
