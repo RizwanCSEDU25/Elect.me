@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
+import Skeleton from './skeleton';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [polls, setPolls] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isPollLoaded,setIsPollLoaded] = useState(false);
   const token = localStorage.getItem('token');
   useEffect(() => {
     fetch('http://localhost:3001/api/auth/polls',{headers: {
@@ -23,6 +25,7 @@ const Dashboard = () => {
     }).then((data) => {
       setPolls(data.polls);
       setIsLoading(false);
+      setIsPollLoaded(true);
       setError(null);
     }).catch((error) => {
       setError(error.message);
@@ -77,10 +80,10 @@ const Dashboard = () => {
   // console.log(poll)
   return (
     <div>
-      <h1 className='text-center'>Your Polls</h1>
-      <button onClick={handleLogout}>Log out</button>
+      {/*<button onClick={handleLogout}>Log out</button>*/}
       {error && <p>{error}</p>}
-      {isLoading && <p>loading</p>}
+      {isLoading && [1,2,3,4,5,6,7].map((n) => <Skeleton    key={n}/>)}
+      {isPollLoaded && <h1 className='text-center'>Your Polls</h1>}
       {pollElements}
     </div>
   )
