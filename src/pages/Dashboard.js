@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [isPollLoaded,setIsPollLoaded] = useState(false);
   const token = localStorage.getItem('token');
 
-  const re = /\S+@\S+\.\S+/;
+  const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
   const timezone = 'Asia/Dhaka'; 
 
   const handleAddingVoterField = () => {
@@ -30,18 +30,18 @@ const Dashboard = () => {
     let list;
     // if(e.target.value !== ""){
       const votermail = e.target.value;
-      if(re.test(e.target.value)){
+      if(emailRegex.test(e.target.value)){
       Promise.all([
         fetch('https://plum-curious-katydid.cyclic.app/api/poll/voterlist/'+id,{method: 'GET',headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer '+token,
         },}),
-        // fetch('http://localhost:3001/api/poll/generate' , {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        // })
+        fetch('http://localhost:3001/api/poll/generate' , {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
       ]).then(([response1, response2]) => Promise.all([response1.json(), response2.json()]))
       .then(([data1, data2]) => {
         console.log(data1, data2);
