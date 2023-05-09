@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Skeleton from './skeleton';
 import Modal from "../components/Modal";
+import moment from 'moment-timezone'; // import the Moment.js library
 
 
 const Dashboard = () => {
@@ -184,26 +185,8 @@ const Dashboard = () => {
 
             
           
-            <p className="poll__time">Starting Time: {new Date(poll.startTime).toLocaleTimeString(
-              'en-us',
-              {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-              }
-            )}</p>
-          <p className="poll__time">Ending Time: {new Date(poll.endTime).toLocaleTimeString(
-              'en-us',
-              {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-              }
-            )}</p>
+          <p className="poll__time">Starting Time: {moment(poll.startTime).subtract(6, 'hours').tz(timezone).format('lll')}</p>
+          <p className="poll__time">Ending Time: {moment(poll.endTime).subtract(6, 'hours').tz(timezone).format('lll')}</p>
             {/* <button type="button"  className="btn btn-primary" onClick={openModal}>Add Voter</button>
 
             <Modal
