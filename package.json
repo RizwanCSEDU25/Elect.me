@@ -6,14 +6,11 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "bootstrap": "^5.2.3",
-    "cdbreact": "^1.5.14",
     "moment-timezone": "^0.5.43",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
     "react-floating-button": "^1.1.1",
-    "react-modal": "^3.16.1",
     "react-router-dom": "^6.9.0",
     "react-scripts": "^2.1.8",
     "recharts": "^2.6.0",
@@ -46,7 +43,6 @@
   "devDependencies": {
     "@babel/cli": "^7.21.5",
     "@babel/core": "^7.21.8",
-    "@babel/preset-env": "^7.21.5",
-    "webpack": "^5.82.0"
+    "@babel/preset-env": "^7.21.5"
   }
 }
