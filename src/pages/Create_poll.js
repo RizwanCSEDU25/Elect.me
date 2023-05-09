@@ -35,6 +35,8 @@ const Create_poll = () => {
       const votermail = e.target.value;
       
       try {
+        if(e.target.value === "") setEmailError("");
+        else{
         if(emailRegex.test(e.target.value)){
         const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/generate' , {
           method: 'GET',
@@ -50,6 +52,7 @@ const Create_poll = () => {
         // set the error message
         setEmailError("Not a valid email");
       }
+    }
         const onchangeVal = [...voters]
         if(!onchangeVal.some((obj) => obj.votermail === votermail)){
           onchangeVal[i]={votermail: votermail, voterid: voterid}

@@ -25,7 +25,7 @@ const Signup = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     // check if the email matches the regex
-    if (emailRegex.test(e.target.value)) {
+    if (e.target.value==="" || emailRegex.test(e.target.value)) {
       // clear the error message
       setEmailError("");
     } else {
@@ -36,7 +36,7 @@ const Signup = () => {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    if (e.target.value.length < 8) {
+    if (e.target.value !== "" && e.target.value.length < 8) {
       // set the error message
       setPasswordError("Password must be 8 characters or longer");
     } else {
