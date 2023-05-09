@@ -3,10 +3,16 @@ import React, { useState } from 'react'
 const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLirstName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // const emailRegex = /^[a-zA-Z0-9]+([._+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]*[-.]*[a-zA-Z0-9]{2,}$/;
+  const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
+
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -18,10 +24,25 @@ const Signup = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+    // check if the email matches the regex
+    if (emailRegex.test(e.target.value)) {
+      // clear the error message
+      setEmailError("");
+    } else {
+      // set the error message
+      setEmailError("Not a valid email");
+    }
   }
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+    if (e.target.value.length < 8) {
+      // set the error message
+      setPasswordError("Password must be 8 characters or longer");
+    } else {
+      // clear the error message
+      setPasswordError("");
+    }
   }
 
   const handleSubmitChange = async (e) => {
@@ -110,6 +131,7 @@ const Signup = () => {
             value={email}
             onChange={handleEmailChange}
           />
+          {emailError && <p className="text-danger">{emailError}</p>}
         </div>
         <div className="mb-3">
           <label for="password" class="form-label fw-bold">Password</label>
@@ -121,6 +143,7 @@ const Signup = () => {
             value={password}
             onChange={handlePasswordChange}
           />
+          {passwordError && <p className="text-danger">{passwordError}</p>} 
         </div>
         <div className="d-grid">
           <button type="submit" className="btn btn-primary" disabled={loading}>

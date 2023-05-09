@@ -10,8 +10,10 @@ const Create_poll = () => {
   const [voters, setVoters] = useState([{votermail: "", voterid: ""}]);
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([{option: "", votes: 0}]);
+  const [emailError, setEmailError] = useState("");
 
-  const re = /\S+@\S+\.\S+/;
+  // const re = /\S+@\S+\.\S+/;
+  const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
 
 
   const handleTitleChange = (e) => {
@@ -33,7 +35,7 @@ const Create_poll = () => {
       const votermail = e.target.value;
       
       try {
-        if(re.test(e.target.value)){
+        if(emailRegex.test(e.target.value)){
         const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/generate' , {
           method: 'GET',
           headers: {
@@ -43,6 +45,10 @@ const Create_poll = () => {
         const data = await response.json();
         voterid = data.id;
         console.log(voterid)
+        setEmailError("");
+      }else {
+        // set the error message
+        setEmailError("Not a valid email");
       }
         const onchangeVal = [...voters]
         if(!onchangeVal.some((obj) => obj.votermail === votermail)){
@@ -52,9 +58,6 @@ const Create_poll = () => {
       } catch (error) {
         setError(error.message);
       }
-      
-        
-    // }
     
   }
 
@@ -76,10 +79,12 @@ const Create_poll = () => {
       console.log(option)
       const votes = 0;
       const onchangeVal = [...options]
-      if(option !== ""){
-        onchangeVal[i]={option: option, votes: votes}
+      if(!onchangeVal.some((obj) => obj.option === option)){
+        // if(option !== ""){
+          onchangeVal[i]={option: option, votes: votes}
+        // }
+        setOptions(onchangeVal);
       }
-      setOptions(onchangeVal);
     // }
     
   }
@@ -134,7 +139,7 @@ const Create_poll = () => {
       const eid = data['id']
       data['voter'].map(async index => await fetch('https://plum-curious-katydid.cyclic.app/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail, {mode: 'no-cors'}))
       if(eid){
-        setMessage("Poll created successfully! Email containing election id & voter id sent to voters");
+        setMessage("Poll created successfully! Email containing election id & voter id being sent to voters");
       }
       window.location.href = '/dashboard'
       setTimeout(() => {
@@ -191,7 +196,7 @@ const Create_poll = () => {
                     </div>
                   )
               }
-              
+              {emailError && <p className="text-danger">{emailError}</p>}
             </div>
             
             <div class="mb-3">
