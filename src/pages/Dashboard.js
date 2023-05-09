@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Skeleton from './skeleton';
 import Modal from "../components/Modal";
+import moment from 'moment-timezone'; // import the Moment.js library
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const Dashboard = () => {
   const token = localStorage.getItem('token');
 
   const re = /\S+@\S+\.\S+/;
+  const timezone = 'Asia/Dhaka'; 
 
   const handleAddingVoterField = () => {
     setVoters([...voters, {votermail:"", voterid: ""}])
@@ -29,7 +32,7 @@ const Dashboard = () => {
       const votermail = e.target.value;
       if(re.test(e.target.value)){
       Promise.all([
-        fetch('http://localhost:3001/api/poll/voterlist/'+id,{method: 'GET',headers: {
+        fetch('https://plum-curious-katydid.cyclic.app/api/poll/voterlist/'+id,{method: 'GET',headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer '+token,
         },}),
@@ -96,7 +99,7 @@ const Dashboard = () => {
 }
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/auth/polls',{headers: {
+    fetch('https://plum-curious-katydid.cyclic.app/api/auth/polls',{headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+token,
     },}).then((res) => {
@@ -137,7 +140,7 @@ const Dashboard = () => {
     try {
       console.log(voters)
       voters.map(async(voter) => {
-        const response = await fetch('http://localhost:3001/api/poll/addvoter/'+electId+'/'+voter.votermail+'/'+voter.voterid, {
+        const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/addvoter/'+electId+'/'+voter.votermail+'/'+voter.voterid, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +153,7 @@ const Dashboard = () => {
       if(data.status === "ok"){
       voters.map(async(voter) => {
 
-        await fetch('http://localhost:3001/api/mail/?eid='+electId+'&vid='+voter.voterid+'&vmail='+voter.votermail);
+        await fetch('https://plum-curious-katydid.cyclic.app/api/mail/?eid='+electId+'&vid='+voter.voterid+'&vmail='+voter.votermail);
       });
     }
       // data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail))
@@ -182,16 +185,7 @@ const Dashboard = () => {
 
             
           
-          <p className="poll__time">Starting Time: {new Date(poll.startTime).toLocaleTimeString(
-              'en-us',
-              {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-              }
-            )}</p>
+          <p className="poll__time">Starting Time: {moment(poll.startTime).tz(timezone).format('lll')}</p>
           <p className="poll__time">Ending Time: {new Date(poll.endTime).toLocaleTimeString(
               'en-us',
               {

@@ -16,7 +16,7 @@ const Voting_page = () => {
   const [error, setError] = useState(null);
   // const token = localStorage.getItem('token');
   useEffect(() => {
-    fetch('http://localhost:3001/api/vote/poll/'+electId,{
+    fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
       method: 'GET',
       headers: {
       'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Voting_page = () => {
     console.log(clicked)
     console.log(option)
     try {
-      const response = await fetch('http://localhost:3001/api/poll/addVote/'+electId+'/'+voterId+'/'+ option, {
+      const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/addVote/'+electId+'/'+voterId+'/'+ option, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

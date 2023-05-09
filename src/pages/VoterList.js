@@ -16,7 +16,7 @@ const VoterList = () => {
     // if(location.state !== null){
     //   id = location.state.id;
     // }
-    fetch('http://localhost:3001/api/poll/voterlist/'+id,{headers: {
+    fetch('https://plum-curious-katydid.cyclic.app/api/poll/voterlist/'+id,{headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+token,
     },}).then((res) => {

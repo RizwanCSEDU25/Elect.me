@@ -20,6 +20,7 @@ const Create_poll = () => {
 
   const handleStartTimeChange = (e) => {
     startTime(e.target.value);
+    
   }
 
   const handleEndTimeChange = (e) => {
@@ -33,7 +34,7 @@ const Create_poll = () => {
       
       try {
         if(re.test(e.target.value)){
-        const response = await fetch('http://localhost:3001/api/poll/generate' , {
+        const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/generate' , {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -106,8 +107,9 @@ const Create_poll = () => {
     console.log("first")
     const token = localStorage.getItem('token');
     console.log(token)
+    console.log(starttime)
     try {
-      const response = await fetch('http://localhost:3001/api/poll/add_poll' , {
+      const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/add_poll' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +132,7 @@ const Create_poll = () => {
       }
       console.log(data['voter'][0]._id)
       const eid = data['id']
-      data['voter'].map(async index => await fetch('http://localhost:3001/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail))
+      data['voter'].map(async index => await fetch('https://plum-curious-katydid.cyclic.app/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail, {mode: 'no-cors'}))
       if(eid){
         setMessage("Poll created successfully! Email containing election id & voter id sent to voters");
       }

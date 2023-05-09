@@ -28,7 +28,7 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const user = await fetch('http://localhost:3001/api/auth/getuser' , {
+      const user = await fetch('https://plum-curious-katydid.cyclic.app/api/auth/getuser' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,10 +42,11 @@ const Signup = () => {
 
      if(userstatus.status === 'notok'){
       console.log("hi")
+      setLoading(false);
       alert('a user already exists with the email')
      }
      else{
-        const response = await fetch('http://localhost:3001/api/auth/register' , {
+        const response = await fetch('https://plum-curious-katydid.cyclic.app/api/auth/register' , {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -21,7 +21,7 @@ const Signin = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/auth/login' , {
+      const response = await fetch('https://plum-curious-katydid.cyclic.app/api/auth/login' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
