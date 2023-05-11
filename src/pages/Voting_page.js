@@ -42,7 +42,7 @@ const Voting_page = () => {
 
   useEffect(() => {
     
-    fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId+'/'+ new Date(),{
+    fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId+'/?timestamp='+ new Date(),{
       method: 'GET',
       headers: {
       'Content-Type': 'application/json',
