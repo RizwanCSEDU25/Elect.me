@@ -19,7 +19,31 @@ const Dashboard = () => {
   const token = localStorage.getItem('token');
 
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
-  const timezone = 'Asia/Dhaka'; 
+  
+  useEffect(() => {
+    
+    fetch('https://plum-curious-katydid.cyclic.app/api/auth/polls',{headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '+token,
+    },}).then((res) => {
+      //return res.json();
+      if(!res.ok){
+        console.log(res)
+        throw Error("fetching is not successful");
+      }
+      else{
+        return res.json();
+      }
+    }).then((data) => {
+      setPolls(data.polls);
+      setIsLoading(false);
+      setIsPollLoaded(true);
+      setError(null);
+    }).catch((error) => {
+      setError(error.message);
+      setIsLoading(false);
+    });
+  }, []);
 
   const handleAddingVoterField = () => {
     setVoters([...voters, {votermail:"", voterid: ""}])
@@ -52,41 +76,6 @@ const Dashboard = () => {
         }
       })
       .catch(error => console.error(error));}
-
-      // try {
-      //   const res = await fetch('http://localhost:3001/api/poll/voterlist/'+id,{headers: {
-      //     'Content-Type': 'application/json',
-      //     'Authorization': 'Bearer '+token,
-      //   },})
-      //   list = await res.json();
-      //   console.log(list)
-      // // } catch (error) {
-        
-      // // }
-      
-      // // try {
-      //   if(re.test(e.target.value)){
-      //   const response = await fetch('http://localhost:3001/api/poll/generate' , {
-      //     method: 'GET',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //   });
-      //   const data = await response.json();
-      //   voterid = data.id;
-      //   console.log(voterid)
-      // }
-      //   const onchangeVal = [...voters]
-      //   if(!onchangeVal.some((obj) => obj.votermail === votermail) && !list.voter.some((object) => object.votermail === votermail)){
-      //     onchangeVal[i]={votermail: votermail, voterid: voterid}
-      //     setVoters(onchangeVal);
-      //   }
-      // } catch (error) {
-      //   setError(error.message);
-      // }
-      
-        
-    // }
     
   }
 
@@ -98,30 +87,7 @@ const Dashboard = () => {
   
 }
 
-  useEffect(() => {
-    
-    fetch('https://plum-curious-katydid.cyclic.app/api/auth/polls',{headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+token,
-    },}).then((res) => {
-      //return res.json();
-      if(!res.ok){
-        console.log(res)
-        throw Error("fetching is not successful");
-      }
-      else{
-        return res.json();
-      }
-    }).then((data) => {
-      setPolls(data.polls);
-      setIsLoading(false);
-      setIsPollLoaded(true);
-      setError(null);
-    }).catch((error) => {
-      setError(error.message);
-      setIsLoading(false);
-    });
-  }, []);
+  
 
   const handleResultClick = (id) => {
     navigate('/result',{state: {id: id}});
