@@ -34,7 +34,7 @@ const Voting_page = () => {
       navigate('/vote');
     }
     
-  }, [location.pathname, navigate]);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('previousRoute', '/');
