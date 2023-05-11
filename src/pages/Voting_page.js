@@ -24,7 +24,8 @@ const Voting_page = () => {
   useEffect(() => {
     const previousRoute = localStorage.getItem('previousRoute');
     console.log(localStorage)
-    console.log(previousRoute)
+    console.log(localStorage.getItem('previousRoute'))
+    // console.log(previousRoute)
     if (previousRoute !== '/' && previousRoute !== '/create' && previousRoute !== '/dashboard' && previousRoute !== '/help' && previousRoute !== '/signin') {
       // Allow navigation to the current route
       console.log('Allowed navigation');
@@ -36,7 +37,7 @@ const Voting_page = () => {
   }, [location.pathname, navigate]);
 
   useEffect(() => {
-    localStorage.setItem('previousRoute', location.pathname);
+    localStorage.setItem('previousRoute', '/');
     fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
       method: 'GET',
       headers: {

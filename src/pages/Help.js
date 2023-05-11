@@ -44,9 +44,9 @@ const renderFAQItem = ({title, content}, index) => {
 // A function that renders the whole component
 const Help = () => {
   const location = useLocation();
-  useEffect(() =>{
+  // useEffect(() =>{
     localStorage.setItem('previousRoute', location.pathname);
-  },[]);
+  // },[]);
   return (
     <Container>
       <Row>
