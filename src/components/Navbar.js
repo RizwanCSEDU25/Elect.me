@@ -15,7 +15,7 @@ const Navbar = () => {
     user = false;
 
     console.log(localStorage) 
-    navigate('/signin');
+    navigate('/signin', { replace: true });
   };
 
   const handleClick = (e) => {
