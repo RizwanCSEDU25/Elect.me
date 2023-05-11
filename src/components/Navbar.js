@@ -16,6 +16,10 @@ const Navbar = () => {
 
     console.log(localStorage) 
     navigate('/signin', { replace: true });
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 0);
   };
 
   const handleClick = (e) => {
@@ -126,7 +130,7 @@ const Navbar = () => {
                       </ul>
                       <ul class="navbar-nav ms-auto">
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{paddingRight: "0.25rem"}}>
-                      <li class="nav-item"><a href='/signin'><button type="button" class="btn btn-outline-light" onClick={handleLogout}>Logout</button></a></li>
+                      <li class="nav-item"><button type="button" class="btn btn-outline-light" onClick={handleLogout}>Logout</button></li>
                       </div>
                       {/* <li class="nav-item"><button class="button" onClick={handleLogout}>Log out</button></li> */}
                       </ul>
