@@ -38,6 +38,10 @@ const Voting_page = () => {
 
   useEffect(() => {
     localStorage.setItem('previousRoute', '/');
+  },[]);
+
+  useEffect(() => {
+    
     fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
       method: 'GET',
       headers: {
