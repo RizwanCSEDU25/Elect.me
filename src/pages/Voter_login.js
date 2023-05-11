@@ -1,11 +1,17 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
+import { useLocation } from 'react-router-dom';
+
+
 
 const Voter_login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [electId, setElectId] = useState("");
     const [voterId, setVoterId] = useState("");
-  
+    
+    
+    const location = useLocation();
+    
     const handleElectIdChange = (e) => {
         setElectId(e.target.value);
     }
@@ -18,6 +24,9 @@ const Voter_login = () => {
       e.preventDefault();
       setLoading(true);
       try {
+        // useEffect(() =>{
+          localStorage.setItem('previousRoute', location.pathname);
+        // },[location]);
         const response = await fetch('https://plum-curious-katydid.cyclic.app/api/vote/login' , {
         method: 'POST',
         headers: {

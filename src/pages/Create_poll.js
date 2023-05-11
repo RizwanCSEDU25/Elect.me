@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
 
 const Create_poll = () => {
   const [loading, setLoading] = useState(false);
@@ -16,13 +17,24 @@ const Create_poll = () => {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
 
 
+  const location = useLocation();
+  useEffect(() =>{
+    localStorage.setItem('previousRoute', location.pathname);
+  },[]);
+
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   }
 
   const handleStartTimeChange = (e) => {
-    startTime(e.target.value);
     
+    const curTime = new Date()
+    const cur = new Date()
+    cur.setHours(cur.getHours() + 6)
+    const newCur = cur.toISOString().slice(0,16)
+    const start = new Date(e.target.value)
+    if(start - curTime < 0) {startTime(newCur)}
+    else startTime(e.target.value);
   }
 
   const handleEndTimeChange = (e) => {
@@ -30,33 +42,39 @@ const Create_poll = () => {
   }
 
   const handleAddingVoters = async(e, i) => {
-    let voterid;
+    let voterid =-1;
     // if(e.target.value !== ""){
       const votermail = e.target.value;
-      
+      const onchangeVal = [...voters]
+      onchangeVal[i]={votermail: votermail, voterid: voterid}
+      setVoters(onchangeVal);
       try {
         if(e.target.value === "") setEmailError("");
         else{
-        if(emailRegex.test(e.target.value)){
-        const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/generate' , {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        voterid = data.id;
-        console.log(voterid)
-        setEmailError("");
-      }else {
-        // set the error message
-        setEmailError("Not a valid email");
-      }
-    }
-        const onchangeVal = [...voters]
+          // setVoters(onchangeVal);
+          if(emailRegex.test(e.target.value)){
+            
+            const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/generate' , {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            const data = await response.json();
+            voterid = data.id;
+            console.log(voterid)
+            setEmailError("");
+          }else {
+            // set the error message
+            setEmailError("Not a valid email");
+          }
+        }
+        console.log(onchangeVal[i].voterid)
+        onchangeVal.splice(i, 1, {votermail: '', voterid: -1})
         if(!onchangeVal.some((obj) => obj.votermail === votermail)){
           onchangeVal[i]={votermail: votermail, voterid: voterid}
           setVoters(onchangeVal);
+          console.log(onchangeVal)
         }
       } catch (error) {
         setError(error.message);
@@ -65,10 +83,11 @@ const Create_poll = () => {
   }
 
   const handleRemovingVoterField = (e, i) => {
-    const deleteVal = [...voters]
-    deleteVal.splice(i,1)
-    setVoters(deleteVal);
-  // }
+      const deleteVal = [...voters]
+      if(deleteVal.length > 1){
+        deleteVal.splice(i,1)
+        setVoters(deleteVal);
+      }
   
 }
 
@@ -82,21 +101,25 @@ const Create_poll = () => {
       console.log(option)
       const votes = 0;
       const onchangeVal = [...options]
-      if(!onchangeVal.some((obj) => obj.option === option)){
+      // onchangeVal[i]={option: option, votes: votes}
+      if(option === "") onchangeVal[i]={option: "", votes: votes}
+      else if(!onchangeVal.some((obj) => obj.option === option)){
         // if(option !== ""){
           onchangeVal[i]={option: option, votes: votes}
         // }
-        setOptions(onchangeVal);
+        // setOptions(onchangeVal);
       }
+      setOptions(onchangeVal);
     // }
     
   }
 
   const handleRemovingOptionField = (e, i) => {
       const deleteVal = [...options]
-      deleteVal.splice(i,1)
-      setOptions(deleteVal);
-    // }
+      if(deleteVal.length > 1){
+        deleteVal.splice(i,1)
+        setOptions(deleteVal);
+      }
     
   }
 
@@ -109,48 +132,74 @@ const Create_poll = () => {
   }
 
   const handleSubmitChange = async (e) => {
+    const curTime = new Date()
+    const cur = new Date()
+    cur.setHours(cur.getHours() + 6)
+    // const start = new Date(starttime)
+    const end = new Date(endtime)
+    const newCur = cur.toISOString().slice(0,16)
+    const start = new Date(starttime)
+    
+    console.log(starttime)
+    console.log(newCur)
     e.preventDefault();
     setLoading(true);
+    setError(null);
     setMessage("Please wait...Poll is being created");
     console.log("first")
     const token = localStorage.getItem('token');
     console.log(token)
-    console.log(starttime)
-    try {
-      const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/add_poll' , {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+token,
-        },
-        body: JSON.stringify({
-          title: title,
-          startTime: starttime,
-          endTime: endtime,
-          voter: voters,
-          question: question,
-          options: options
-        }),
-      }) 
-      console.log(response)
-      const data = await response.json()
-      if(data.status === "notconfirmed"){
+   
+    
+    if(end - start > 0 && end - curTime > 0){
+      if(options.length >= 2){
+        try {
+          console.log(starttime)
+          const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/add_poll' , {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token,
+            },
+            body: JSON.stringify({
+              title: title,
+              startTime: starttime,
+              endTime: endtime,
+              voter: voters,
+              question: question,
+              options: options
+            }),
+          }) 
+          console.log(response)
+          const data = await response.json()
+          if(data.status === "notconfirmed"){
+            setMessage("");
+            alert("Please verify your email by clicking on the link sent to your email address");
+          }
+          console.log(data['voter'][0]._id)
+          const eid = data['id']
+          data['voter'].map(async index => await fetch('https://plum-curious-katydid.cyclic.app/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail, {mode: 'no-cors'}))
+          if(eid){
+            setMessage("Poll created successfully! Email containing election id & voter id being sent to voters");
+          }
+          window.location.href = '/dashboard'
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        } catch (error) {
+          setMessage("");
+          setLoading(false);
+          setError(error.message);
+        }
+      }else{
         setMessage("");
-        alert("Please verify your email by clicking on the link sent to your email address");
-      }
-      console.log(data['voter'][0]._id)
-      const eid = data['id']
-      data['voter'].map(async index => await fetch('https://plum-curious-katydid.cyclic.app/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail, {mode: 'no-cors'}))
-      if(eid){
-        setMessage("Poll created successfully! Email containing election id & voter id being sent to voters");
-      }
-      window.location.href = '/dashboard'
-      setTimeout(() => {
         setLoading(false);
-      }, 1000);
-    } catch (error) {
+        alert("There must be at least 2 options");
+      }
+    }else{
+      setMessage("");
       setLoading(false);
-      setError(error.message);
+      alert("Wrong time input");
     }
     
 

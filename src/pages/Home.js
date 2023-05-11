@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useLocation } from 'react-router-dom';
 import { Container, Row, Col, Card, Carousel } from 'react-bootstrap';
 
 //const Home = () => {
@@ -35,6 +36,10 @@ const renderCardItem = ({title, text}) => (
 
 
 function Home() {
+  const location = useLocation();
+  useEffect(() =>{
+    localStorage.setItem('previousRoute', location.pathname);
+  },[]);
   return (
     <Container className="container">
       <Row className="text-center mt-4">

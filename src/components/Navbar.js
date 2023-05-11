@@ -1,14 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-// import { Button } from 'bootstrap';
-//import { useContext } from 'react';
-//import { userContext } from '../App';
-//import { useState } from 'react';
-//import { useEffect } from 'react';
+import React, {useEffect} from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
-  //const [user, setUser] = useState({});
-  //const {state,dispatch} = useContext(userContext);
+  const navigate = useNavigate();
+  const location = useLocation();
   function useAuth() {
 
     const token = localStorage.getItem('token');
@@ -22,31 +17,84 @@ const Navbar = () => {
 
   
   const handleLogout = () => {
-    //const {state,dispatch} = useContext(userContext);
-    //dispatch({type:"USER", payload:false})
     localStorage.removeItem('token');
     user = false;
 
-    console.log(localStorage) // Remove the JWT from local storage
-    // Perform any other log out actions, such as redirecting to a log in page
+    console.log(localStorage) 
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+  };
+
+  const handleHomeClick = () => {
+    useEffect(() => {
+      if (location.pathname === '/') {
+        window.location.reload();
+      } else {
+        navigate('/');
+      }
+    }, [location.pathname])
+  };
+
+  const handleDashboardClick = () => {
+    useEffect(() => {
+      if (location.pathname === '/dashboard') {
+        window.location.reload();
+      } else {
+        navigate('/dashboard');
+      }
+    }, [location.pathname])
+  };
+
+  const handleCreateClick = () => {
+    useEffect(() => {
+      if (location.pathname === '/create') {
+        window.location.reload();
+      } else {
+        navigate('/create');
+      }
+    }, [location.pathname])
+  };
+
+  const handleVoteClick = () => {
+    useEffect(() => {
+      if (location.pathname === '/vote') {
+        window.location.reload();
+      } else {
+        navigate('/vote');
+      }
+    }, [location.pathname])
+  };
+
+  const handleHelpClick = () => {
+    useEffect(() => {
+      if (location.pathname === '/help') {
+        window.location.reload();
+      } else {
+        navigate('/help');
+      }
+    }, [location.pathname])
+    
+    
   };
 
   if(!user){
     return (
       <div class="container-fluid bg-dark">
               <nav class="navbar navbar-expand-lg bg-dark navbar-dark text-white fixed-top" style={{paddingLeft: "5rem", paddingRight: "5rem"}}>
-                  <a href="#" class="navbar-brand">
+                  <a href="#" class="navbar-brand" onClick={(e) => handleClick(e)}>
                       <img class="logo" src="vote-icon-22.jpg" />
                   </a> 
-                  <h1 class="fw-bold" style={{paddingLeft: "0.25rem"}}>Elect.me</h1> 
+                  <a href="/"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", color: "white"}}>Elect.me</h1> </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent" >
                       <ul class="navbar-nav ms-auto" textAlign= 'center' >
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'center'}}>
-                      <li class="nav-item"><Link class="nav-link active" to="/"> <a>Home</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/vote"><a>Vote</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/help">Help</Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}><a>Vote</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/help" onClick={handleHelpClick}>Help</Link></li>
                       </div>
                       </ul>
                       <ul class="navbar-nav ms-auto">
@@ -65,20 +113,20 @@ const Navbar = () => {
     return (
       <div class="container-fluid bg-dark">
               <nav class="navbar navbar-expand-lg bg-dark navbar-dark text-white fixed-top" style={{paddingLeft: "5rem", paddingRight: "5rem"}}>
-                  <a href="#" class="navbar-brand">
+                  <a href="#" class="navbar-brand" onClick={(e) => handleClick(e)}>
                       <img class="logo" src="vote-icon-22.jpg" />
                   </a> 
-                  <h1 class="fw-bold" style={{paddingLeft: "0.25rem"}}>Elect.me</h1> 
+                  <a href="/"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", color: "white"}}>Elect.me</h1> </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent" >
                       <ul class="navbar-nav ms-auto" textAlign= 'center' >
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'center'}}>
-                      <li class="nav-item"><Link class="nav-link active" to="/"> <a>Home</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/dashboard"> <a>Dashboard</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/create"><a>Create Poll</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/vote"><a>Vote</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/help">Help</Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/dashboard" onClick={handleDashboardClick}> <a>Dashboard</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/create" onClick={handleCreateClick}><a>Create Poll</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}><a>Vote</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/help" onClick={handleHelpClick}>Help</Link></li>
                       </div>
                       </ul>
                       <ul class="navbar-nav ms-auto">

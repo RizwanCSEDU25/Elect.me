@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Accordion, Card, Container, Row, Col, Button, Collapse } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 // Assuming you have some faqData array with title and content properties
 const faqData = [
@@ -21,6 +22,8 @@ const faqData = [
 const renderFAQItem = ({title, content}, index) => {
   // A state variable that indicates whether the answer is expanded or collapsed
   const [open, setOpen] = useState(false);
+  
+  
 
   return (
     <Card>
@@ -40,6 +43,10 @@ const renderFAQItem = ({title, content}, index) => {
 
 // A function that renders the whole component
 const Help = () => {
+  const location = useLocation();
+  useEffect(() =>{
+    localStorage.setItem('previousRoute', location.pathname);
+  },[]);
   return (
     <Container>
       <Row>

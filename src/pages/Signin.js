@@ -1,4 +1,5 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
+import { useLocation } from 'react-router-dom';
 import { useContext } from 'react';
 import { userContext } from '../App';
 
@@ -8,6 +9,11 @@ const Signin = () => {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const location = useLocation();
+  // useEffect(() =>{
+    // localStorage.setItem('previousRoute', location.pathname);
+  // },[]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

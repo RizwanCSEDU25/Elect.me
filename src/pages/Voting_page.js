@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Skeleton from './skeleton';
 
 const Voting_page = () => {
@@ -15,7 +15,28 @@ const Voting_page = () => {
   const[isVote, setIsVote] = useState(false);
   const [error, setError] = useState(null);
   // const token = localStorage.getItem('token');
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  
+
   useEffect(() => {
+    const previousRoute = localStorage.getItem('previousRoute');
+    console.log(localStorage)
+    console.log(previousRoute)
+    if (previousRoute !== '/' && previousRoute !== '/create' && previousRoute !== '/dashboard' && previousRoute !== '/help' && previousRoute !== '/signin') {
+      // Allow navigation to the current route
+      console.log('Allowed navigation');
+    } else {
+      // Redirect the user to a different route
+      navigate('/vote');
+    }
+    
+  }, [location.pathname, navigate]);
+
+  useEffect(() => {
+    localStorage.setItem('previousRoute', location.pathname);
     fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
       method: 'GET',
       headers: {
@@ -43,6 +64,8 @@ const Voting_page = () => {
       setIsLoading(false);
     });
   }, []);
+
+  
 
   const handleClick = (e, index, chosen) => { 
     setClicked(index);

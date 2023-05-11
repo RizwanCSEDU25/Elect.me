@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Skeleton from './skeleton';
 import Modal from "../components/Modal";
 import moment from 'moment'; // import the Moment.js library
@@ -98,7 +98,10 @@ const Dashboard = () => {
   
 }
 
+const location = useLocation();
+
   useEffect(() => {
+    localStorage.setItem('previousRoute', location.pathname);
     fetch('https://plum-curious-katydid.cyclic.app/api/auth/polls',{headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+token,
@@ -175,18 +178,19 @@ const Dashboard = () => {
     {/* <a href="#" onClick={() => handleClick(poll._id)}> */}
         <article style={{position: 'relative'}} className="poll m-4 d-flex justify-content-center">
           <h3 className="poll__name ">{poll.title}</h3>
-          <button type="button" style={{position: 'absolute', top:10, right: 45}} className="btn btn-primary" onClick={() => handleResultClick(poll._id)}>
-              Result
-            </button>
-
-            <button type="button" style={{position: 'absolute', top:50, right: 23}} className="btn btn-primary" onClick={() => handleListClick(poll._id)}>
-              Voter List
-            </button>
+          
 
             
           
           <p className="poll__time">Starting Time: {moment(poll.startTime).subtract(6, 'hours').format('lll')}</p>
           <p className="poll__time">Ending Time: {moment(poll.endTime).subtract(6, 'hours').format('lll')}</p>
+          <button type="button"  className="btn btn-primary" onClick={() => handleResultClick(poll._id)}>
+              Result
+            </button>
+
+            <button type="button" className="btn btn-primary" onClick={() => handleListClick(poll._id)}>
+              Voter List
+            </button>
             {/* <button type="button"  className="btn btn-primary" onClick={openModal}>Add Voter</button>
 
             <Modal
