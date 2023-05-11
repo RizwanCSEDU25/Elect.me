@@ -19,27 +19,6 @@ const Voting_page = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  
-
-  useEffect(() => {
-    const previousRoute = localStorage.getItem('previousRoute');
-    console.log(localStorage)
-    console.log(localStorage.getItem('previousRoute'))
-    // console.log(previousRoute)
-    if (previousRoute !== '/' && previousRoute !== '/create' && previousRoute !== '/dashboard' && previousRoute !== '/help' && previousRoute !== '/signin') {
-      // Allow navigation to the current route
-      console.log('Allowed navigation');
-    } else {
-      // Redirect the user to a different route
-      navigate('/vote');
-    }
-    
-  }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('previousRoute', '/');
-  // // },[]);
-
   useEffect(() => {
     fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
       method: 'GET',

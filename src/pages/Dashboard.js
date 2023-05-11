@@ -98,10 +98,8 @@ const Dashboard = () => {
   
 }
 
-const location = useLocation();
-
   useEffect(() => {
-    localStorage.setItem('previousRoute', location.pathname);
+    
     fetch('https://plum-curious-katydid.cyclic.app/api/auth/polls',{headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+token,

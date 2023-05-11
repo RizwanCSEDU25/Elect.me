@@ -23,12 +23,13 @@ export const userContext = createContext();
 function App () {
  //const userContext = createContext();
  const [state, dispatch] = useReducer(reducer, initialState)
+ const hideNavbarRoutes = ['/cast/*']; 
 
   return (
       <BrowserRouter> 
         
         <userContext.Provider value={{state,dispatch}}>
-        <Navbar />
+        {window.location.pathname.slice(0,5) !== '/cast' && <Navbar />}
         
         <div className='mydiv'>
           <Routes>
@@ -39,7 +40,7 @@ function App () {
             </Route>
             
             <Route path="/vote" element={<Voter_login/>} />
-            <Route path="/cast/:electId/:voterId/:timestamp" element={<Voting_page/>} />
+            <Route path="/cast/:electId/:voterId" element={<Voting_page/>} />
             <Route path="/help" element={<Help/>} />
             <Route path="/*" element={<PrivateOutlet />}>
               <Route path="dashboard" element={<Dashboard/>} />

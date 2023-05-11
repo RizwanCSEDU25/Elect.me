@@ -10,10 +10,7 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const location = useLocation();
-  // useEffect(() =>{
-    // localStorage.setItem('previousRoute', location.pathname);
-  // },[]);
+ 
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

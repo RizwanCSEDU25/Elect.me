@@ -78,7 +78,7 @@ const Navbar = () => {
     
     
   };
-
+  
   if(!user){
     return (
       <div class="container-fluid bg-dark">

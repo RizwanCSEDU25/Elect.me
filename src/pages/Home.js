@@ -36,10 +36,6 @@ const renderCardItem = ({title, text}) => (
 
 
 function Home() {
-  const location = useLocation();
-  useEffect(() =>{
-    localStorage.setItem('previousRoute', location.pathname);
-  },[]);
   return (
     <Container className="container">
       <Row className="text-center mt-4">

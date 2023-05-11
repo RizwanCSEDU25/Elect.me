@@ -16,12 +16,6 @@ const Create_poll = () => {
   // const re = /\S+@\S+\.\S+/;
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
 
-
-  const location = useLocation();
-  useEffect(() =>{
-    localStorage.setItem('previousRoute', location.pathname);
-  },[]);
-
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   }

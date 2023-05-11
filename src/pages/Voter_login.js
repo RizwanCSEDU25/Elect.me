@@ -8,9 +8,6 @@ const Voter_login = () => {
     const [error, setError] = useState(null);
     const [electId, setElectId] = useState("");
     const [voterId, setVoterId] = useState("");
-    
-    
-    const location = useLocation();
 
     useEffect(() =>{
       localStorage.setItem('previousRoute', '/');
@@ -27,7 +24,6 @@ const Voter_login = () => {
     const handleSubmitChange = async (e) => {
       e.preventDefault();
       setLoading(true);
-      localStorage.setItem('previousRoute', location.pathname);
       try {
         
         const response = await fetch('https://plum-curious-katydid.cyclic.app/api/vote/login' , {
@@ -42,9 +38,8 @@ const Voter_login = () => {
        })
 
        const voterStatus = await response.json();
-       const now = new Date();
        if(voterStatus.status==="ok"){
-        window.location.href = '/cast/'+electId+'/'+voterId+'/'+now
+        window.open('/cast/'+electId+'/'+voterId, '_blank')
         setTimeout(() => {
           setLoading(false);
         }, 1000);
