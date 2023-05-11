@@ -41,8 +41,8 @@ const Voting_page = () => {
   },[]);
 
   useEffect(() => {
-    
-    fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId+'/?timestamp='+ new Date(),{
+    const timeStamp = new Date();
+    fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
       method: 'GET',
       headers: {
       'Content-Type': 'application/json',
