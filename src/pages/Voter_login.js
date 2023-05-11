@@ -11,6 +11,10 @@ const Voter_login = () => {
     
     
     const location = useLocation();
+
+    useEffect(() =>{
+      localStorage.setItem('previousRoute', '/');
+        },[]);
     
     const handleElectIdChange = (e) => {
         setElectId(e.target.value);
@@ -23,10 +27,9 @@ const Voter_login = () => {
     const handleSubmitChange = async (e) => {
       e.preventDefault();
       setLoading(true);
+      localStorage.setItem('previousRoute', location.pathname);
       try {
-        // useEffect(() =>{
-          localStorage.setItem('previousRoute', location.pathname);
-        // },[location]);
+        
         const response = await fetch('https://plum-curious-katydid.cyclic.app/api/vote/login' , {
         method: 'POST',
         headers: {
