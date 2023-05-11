@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuth from './useAuth';
 
@@ -6,13 +6,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
- const user = useAuth();
+  const [user, setUser] = useState(useAuth())
  console.log(user);
 
   
   const handleLogout = () => {
     localStorage.removeItem('token');
-    user = false;
+    setUser(false)
 
     console.log(localStorage) 
     navigate('/signin', { replace: true });
