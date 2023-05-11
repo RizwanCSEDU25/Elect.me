@@ -1,16 +1,10 @@
 import React, {useEffect} from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import useAuth from './useAuth';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  function useAuth() {
-
-    const token = localStorage.getItem('token');
-
-    if(token===null) return false;
-    return true;
- }
 
  const user = useAuth();
  console.log(user);
@@ -21,6 +15,7 @@ const Navbar = () => {
     user = false;
 
     console.log(localStorage) 
+    navigate('/signin');
   };
 
   const handleClick = (e) => {
@@ -78,7 +73,7 @@ const Navbar = () => {
     
     
   };
-  
+
   if(!user){
     return (
       <div class="container-fluid bg-dark">
@@ -131,7 +126,7 @@ const Navbar = () => {
                       </ul>
                       <ul class="navbar-nav ms-auto">
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{paddingRight: "0.25rem"}}>
-                      <li class="nav-item"><a href='/signin'><button type="button" class="btn btn-outline-light" onClick={handleLogout}>Logout</button></a></li>
+                      <li class="nav-item"><button type="button" class="btn btn-outline-light" onClick={handleLogout}>Logout</button></li>
                       </div>
                       {/* <li class="nav-item"><button class="button" onClick={handleLogout}>Log out</button></li> */}
                       </ul>

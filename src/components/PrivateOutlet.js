@@ -5,5 +5,5 @@ import React from "react";
 export default function PrivateOutlet() {
   const auth = useAuth();
 
-  return auth ? <Outlet /> : <Navigate to="/signin" />;
+  return !auth ? <Navigate to="/signin" /> : <Outlet />;
 }
