@@ -36,12 +36,11 @@ const Voting_page = () => {
     
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('previousRoute', '/');
-  },[]);
+  // useEffect(() => {
+  //   localStorage.setItem('previousRoute', '/');
+  // // },[]);
 
   useEffect(() => {
-    const timeStamp = new Date();
     fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
       method: 'GET',
       headers: {

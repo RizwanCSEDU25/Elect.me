@@ -42,9 +42,9 @@ const Voter_login = () => {
        })
 
        const voterStatus = await response.json();
-
+       const now = new Date();
        if(voterStatus.status==="ok"){
-        window.location.href = '/cast/'+electId+'/'+voterId
+        window.location.href = '/cast/'+electId+'/'+voterId+'/'+now
         setTimeout(() => {
           setLoading(false);
         }, 1000);

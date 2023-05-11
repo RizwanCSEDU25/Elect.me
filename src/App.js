@@ -39,7 +39,7 @@ function App () {
             </Route>
             
             <Route path="/vote" element={<Voter_login/>} />
-            <Route path="/cast/:electId/:voterId" element={<Voting_page/>} />
+            <Route path="/cast/:electId/:voterId/:timestamp" element={<Voting_page/>} />
             <Route path="/help" element={<Help/>} />
             <Route path="/*" element={<PrivateOutlet />}>
               <Route path="dashboard" element={<Dashboard/>} />
