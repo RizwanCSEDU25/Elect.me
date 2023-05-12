@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Skeleton from './skeleton';
 
 const Voting_page = () => {
@@ -16,8 +16,8 @@ const Voting_page = () => {
   const [error, setError] = useState(null);
   // const token = localStorage.getItem('token');
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
   useEffect(() => {
     fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
@@ -95,7 +95,7 @@ const Voting_page = () => {
   const voteElements = options && options.map((article, index) => (
   <div className='d-flex justify-content-center'>
     
-    <a href="#" onClick={(e) => handleClick(e, index, article.option)}>
+    <a href="/#" onClick={(e) => handleClick(e, index, article.option)}>
    
       <article key={index} index={index} className={index === clicked? 'clicked m-4 d-flex justify-content-center' : "poll m-4 d-flex justify-content-center"}>
       {console.log(clicked)}

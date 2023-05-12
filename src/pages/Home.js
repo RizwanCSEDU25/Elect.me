@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import { Container, Row, Col, Card, Carousel } from 'react-bootstrap';
 
 //const Home = () => {

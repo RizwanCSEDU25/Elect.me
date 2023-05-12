@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Accordion, Card, Container, Row, Col, Button, Collapse } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Card, Container, Row, Col, Button, Collapse } from 'react-bootstrap';
 
 // Assuming you have some faqData array with title and content properties
 const faqData = [

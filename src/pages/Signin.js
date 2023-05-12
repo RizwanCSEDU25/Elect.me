@@ -1,11 +1,7 @@
-import React,{useState, useEffect} from 'react'
-import { useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import { userContext } from '../App';
+import React,{useState} from 'react'
 
 const Signin = () => {
   const [loading, setLoading] = useState(false);
-  const {state,dispatch} = useContext(userContext);
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +34,7 @@ const Signin = () => {
      console.log(data)
 
      if(data.token) {
-      dispatch({type:"USER", payload:true})
+      // dispatch({type:"USER", payload:true})
       localStorage.setItem('token', data.token)
       console.log(data.token)
       window.location.href = '/dashboard'

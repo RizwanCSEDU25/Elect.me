@@ -16,10 +16,7 @@ const Navbar = () => {
 
     console.log(localStorage) 
     navigate('/signin', { replace: true });
-
-    setTimeout(() => {
-      window.location.reload()
-    }, 0);
+    window.location.reload();
   };
 
   const handleClick = (e) => {
@@ -82,8 +79,8 @@ const Navbar = () => {
     return (
       <div class="container-fluid bg-dark">
               <nav class="navbar navbar-expand-lg bg-dark navbar-dark text-white fixed-top" style={{paddingLeft: "5rem", paddingRight: "5rem"}}>
-                  <a href="#" class="navbar-brand" onClick={(e) => handleClick(e)}>
-                      <img class="logo" src="vote-icon-22.jpg" />
+                  <a href="/#" class="navbar-brand" onClick={(e) => handleClick(e)}>
+                      <img class="logo" src="vote-icon-22.jpg" alt=''/>
                   </a> 
                   <a href="/"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", color: "white"}}>Elect.me</h1> </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
@@ -91,8 +88,8 @@ const Navbar = () => {
                   <div class="collapse navbar-collapse" id="navbarSupportedContent" >
                       <ul class="navbar-nav ms-auto" textAlign= 'center' >
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'center'}}>
-                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}><a>Vote</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> Home</Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}>Vote</Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/help" onClick={handleHelpClick}>Help</Link></li>
                       </div>
                       </ul>
@@ -112,8 +109,8 @@ const Navbar = () => {
     return (
       <div class="container-fluid bg-dark">
               <nav class="navbar navbar-expand-lg bg-dark navbar-dark text-white fixed-top" style={{paddingLeft: "5rem", paddingRight: "5rem"}}>
-                  <a href="#" class="navbar-brand" onClick={(e) => handleClick(e)}>
-                      <img class="logo" src="vote-icon-22.jpg" />
+                  <a href="/#" class="navbar-brand" onClick={(e) => handleClick(e)}>
+                      <img class="logo" src="vote-icon-22.jpg" alt=''/>
                   </a> 
                   <a href="/"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", color: "white"}}>Elect.me</h1> </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
@@ -121,10 +118,10 @@ const Navbar = () => {
                   <div class="collapse navbar-collapse" id="navbarSupportedContent" >
                       <ul class="navbar-nav ms-auto" textAlign= 'center' >
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'center'}}>
-                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/dashboard" onClick={handleDashboardClick}> <a>Dashboard</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/create" onClick={handleCreateClick}><a>Create Poll</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}><a>Vote</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}>Home</Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/dashboard" onClick={handleDashboardClick}> Dashboard</Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/create" onClick={handleCreateClick}>Create Poll</Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}>Vote</Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/help" onClick={handleHelpClick}>Help</Link></li>
                       </div>
                       </ul>
