@@ -12,7 +12,7 @@ const Navbar = () => {
  
  useEffect(()=>{
   setUser(useAuth());
- });
+ },[]);
  console.log(user);
   
   const handleLogout = () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
     setUser(useAuth())
 
     console.log(localStorage) 
-    navigate('/signin', { replace: true });
+    navigate('/signin');
     window.location.reload();
   };
 
