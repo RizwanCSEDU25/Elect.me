@@ -12,7 +12,7 @@ const Navbar = () => {
  
  useEffect(()=>{
   setUser(useAuth());
- },[]);
+ });
  console.log(user);
   
   const handleLogout = () => {
