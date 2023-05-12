@@ -22,12 +22,12 @@ import VoterList from './pages/VoterList';
 export const userContext = createContext();
 function App () {
  //const userContext = createContext();
- const [state, dispatch] = useReducer(reducer, initialState)
+//  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
       <BrowserRouter> 
         
-        <userContext.Provider value={{state,dispatch}}>
+        {/* <userContext.Provider value={{state,dispatch}}> */}
         {window.location.pathname.slice(0,5) !== '/cast' && <Navbar />}
         
         <div className='mydiv'>
@@ -51,7 +51,7 @@ function App () {
             <Route path="*" element={<Error/>} />
           </Routes>
         </div>
-        </userContext.Provider>
+        {/* </userContext.Provider> */}
             
       </BrowserRouter>
   );
