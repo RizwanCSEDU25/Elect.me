@@ -36,7 +36,7 @@ const Dashboard = () => {
       setError(error.message);
       setIsLoading(false);
     });
-  }, [navigate]);
+  }, []);
 
   // const handleAddingVoterField = () => {
   //   setVoters([...voters, {votermail:"", voterid: ""}])

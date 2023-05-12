@@ -9,13 +9,17 @@ const Navbar = () => {
   const location = useLocation();
   const {state,dispatch} = useContext(userContext);
   const [user, setUser] = useState(useAuth())
+ 
+ useEffect(()=>{
+  setUser(useAuth());
+ });
  console.log(user);
-
   
   const handleLogout = () => {
+    
     dispatch({type: "LOGOUT"});
     localStorage.removeItem('token');
-    setUser(false)
+    setUser(useAuth())
 
     console.log(localStorage) 
     navigate('/signin', { replace: true });
