@@ -25,7 +25,7 @@ const Voter_login = () => {
       setLoading(true);
       try {
         
-        const response = await fetch('https://elect-server-opal.vercel.app/api/vote/login' , {
+        const response = await fetch('https://plum-curious-katydid.cyclic.app/api/vote/login' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

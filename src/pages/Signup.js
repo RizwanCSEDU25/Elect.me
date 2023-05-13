@@ -56,7 +56,7 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const user = await fetch('https://elect-server-opal.vercel.app/api/auth/getuser' , {
+      const user = await fetch('https://plum-curious-katydid.cyclic.app/api/auth/getuser' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const Signup = () => {
       alert('a user already exists with the email')
      }
      else{
-        const response = await fetch('https://elect-server-opal.vercel.app/api/auth/register' , {
+        const response = await fetch('https://plum-curious-katydid.cyclic.app/api/auth/register' , {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

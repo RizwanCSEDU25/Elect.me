@@ -47,7 +47,7 @@ const Create_poll = () => {
           // setVoters(onchangeVal);
           if(emailRegex.test(e.target.value)){
             
-            const response = await fetch('https://elect-server-opal.vercel.app/api/poll/generate' , {
+            const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/generate' , {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ const Create_poll = () => {
       if(options.length >= 2){
         try {
           console.log(starttime)
-          const response = await fetch('https://elect-server-opal.vercel.app/api/poll/add_poll' , {
+          const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/add_poll' , {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -171,7 +171,7 @@ const Create_poll = () => {
           }
           console.log(data['voter'][0]._id)
           const eid = data['id']
-          data['voter'].map(async index => await fetch('https://elect-server-opal.vercel.app/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail, {mode: 'no-cors'}))
+          data['voter'].map(async index => await fetch('https://plum-curious-katydid.cyclic.app/api/mail/?eid='+eid+'&vid='+index.voterid+'&vmail='+index.votermail, {mode: 'no-cors'}))
           if(eid){
             setMessage("Poll created successfully! Email containing election id & voter id being sent to voters");
           }
