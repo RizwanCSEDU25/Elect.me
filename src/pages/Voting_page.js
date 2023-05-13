@@ -20,7 +20,7 @@ const Voting_page = () => {
   // const location = useLocation();
 
   useEffect(() => {
-    fetch('https://plum-curious-katydid.cyclic.app/api/vote/poll/'+electId,{
+    fetch('https://elect-server-opal.vercel.app/api/vote/poll/'+electId,{
       method: 'GET',
       headers: {
       'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const Voting_page = () => {
     console.log(clicked)
     console.log(option)
     try {
-      const response = await fetch('https://plum-curious-katydid.cyclic.app/api/poll/addVote/'+electId+'/'+voterId+'/'+ option, {
+      const response = await fetch('https://elect-server-opal.vercel.app/api/poll/addVote/'+electId+'/'+voterId+'/'+ option, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

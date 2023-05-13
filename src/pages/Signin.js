@@ -24,7 +24,7 @@ const Signin = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch('https://plum-curious-katydid.cyclic.app/api/auth/login' , {
+      const response = await fetch('https://elect-server-opal.vercel.app/api/auth/login' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

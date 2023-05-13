@@ -18,7 +18,7 @@ const Result = () => {
     // if(location.state !== null){
     //   id = location.state.id;
     // }
-    fetch('https://plum-curious-katydid.cyclic.app/api/poll/result/'+id,{headers: {
+    fetch('https://elect-server-opal.vercel.app/api/poll/result/'+id,{headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+token,
     },}).then((res) => {
