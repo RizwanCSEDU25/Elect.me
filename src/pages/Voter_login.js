@@ -8,9 +8,9 @@ const Voter_login = () => {
     const [electId, setElectId] = useState("");
     const [voterId, setVoterId] = useState("");
 
-    useEffect(() =>{
-      localStorage.setItem('previousRoute', '/');
-        },[]);
+    // useEffect(() =>{
+    //   localStorage.setItem('previousRoute', '/');
+    //     },[]);
     
     const handleElectIdChange = (e) => {
         setElectId(e.target.value);
