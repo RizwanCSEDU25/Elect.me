@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Container, Row, Col, Button, Collapse } from 'react-bootstrap';
+import FloatingButton from '../components/FloatingButton';
 
 // Assuming you have some faqData array with title and content properties
 const faqData = [
@@ -37,13 +38,17 @@ const renderFAQItem = ({title, content}, index) => {
         </Card.Body>
       </Collapse>
     </Card>
+    
   );
 };
+
+
 
 // A function that renders the whole component
 const Help = () => {
   return (
-    <Container>
+    <div>
+    {<Container>
       <Row>
         <Col>
           <h1>Help</h1>
@@ -89,7 +94,9 @@ const Help = () => {
           </Card>
         </Col>
       </Row>     
-    </Container>
+    </Container>}
+    
+    </div>
   );
 }
 

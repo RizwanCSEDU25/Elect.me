@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { userContext } from '../App';
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
@@ -9,9 +12,13 @@ const Signup = () => {
   const [lastName, setLirstName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {state,dispatch} = useContext(userContext);
 
   // const emailRegex = /^[a-zA-Z0-9]+([._+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]*[-.]*[a-zA-Z0-9]{2,}$/;
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
+
+  const navigate = useNavigate();
+  
 
 
   const handleFirstNameChange = (e) => {
@@ -82,8 +89,10 @@ const Signup = () => {
         const data = await response.json()
         console.log(data.token)
         if(data.token) {
+          dispatch({type:"SIGNUP"})
           localStorage.setItem('token', data.token)
-          window.location.href = '/dashboard'
+          // window.location.href = '/dashboard'
+          navigate('/dashboard');
           setTimeout(() => {
             setLoading(false);
           }, 1000);

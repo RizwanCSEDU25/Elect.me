@@ -89,25 +89,28 @@ const Navbar = () => {
                   <a href="#" class="navbar-brand" onClick={(e) => handleClick(e)}>
                       <img class="logo" src="vote-icon-22.jpg" />
                   </a> 
-                  <a href="/"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", color: "white"}}>Elect.me</h1> </a>
+                  <a href="/"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", paddingRight: "1rem",color: "white"}}>Elect.me</h1> </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
                   </button>
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent" >
-                      <ul class="navbar-nav ms-auto" textAlign= 'center' >
-                      <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'center'}}>
+                  {/* <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+                      <ul class="navbar-nav me-auto" textAlign= 'right' >
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'right'}}>
                       <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}><a>Vote</a></Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/help" onClick={handleHelpClick}>Help</Link></li>
                       </div>
-                      </ul>
+                      </ul> */}
                       <ul class="navbar-nav ms-auto">
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{paddingRight: "0.25rem"}}>
+                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li>
+                      <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}><a>Vote</a></Link></li>
+                      
                       <li class="nav-item"><a href='/signup'><button type="button" class="btn btn-outline-light me-1">Sign up</button></a></li>
                       <li class="nav-item"><a href='/signin'><button type="button" class="btn btn-outline-light me-1">Sign in</button></a></li>
                       </div>
                       {/* <li class="nav-item"><button class="button" onClick={handleLogout}>Log out</button></li> */}
                       </ul>
-                  </div>
+                  {/* </div> */}
               </nav>
       </div>
     )
@@ -119,17 +122,17 @@ const Navbar = () => {
                   <a href="#" class="navbar-brand" onClick={(e) => handleClick(e)}>
                       <img class="logo" src="vote-icon-22.jpg" />
                   </a> 
-                  <a href="/"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", color: "white"}}>Elect.me</h1> </a>
+                  <a href="/dashboard"><h1 class="fw-bold" style={{paddingLeft: "0.25rem", color: "white"}}>Elect.me</h1> </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent" >
                       <ul class="navbar-nav ms-auto" textAlign= 'center' >
                       <div class="collapse navbar-collapse" id="navbarSupportedContent" style= {{textAlign:'center'}}>
-                      <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li>
+                      {/* <li class="nav-item"><Link class="nav-link" to="/" onClick={handleHomeClick}> <a>Home</a></Link></li> */}
                       <li class="nav-item"><Link class="nav-link" to="/dashboard" onClick={handleDashboardClick}> <a>Dashboard</a></Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/create" onClick={handleCreateClick}><a>Create Poll</a></Link></li>
                       <li class="nav-item"><Link class="nav-link" to="/vote" onClick={handleVoteClick}><a>Vote</a></Link></li>
-                      <li class="nav-item"><Link class="nav-link" to="/help" onClick={handleHelpClick}>Help</Link></li>
+                      {/* <li class="nav-item"><Link class="nav-link" to="/help" onClick={handleHelpClick}>Help</Link></li> */}
                       </div>
                       </ul>
                       <ul class="navbar-nav ms-auto">

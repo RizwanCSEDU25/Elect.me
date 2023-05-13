@@ -103,6 +103,24 @@ a {
   }
 }
 
+.floating-button {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #ff0000; /* Set your desired background color */
+  color: #fff; /* Set your desired text color */
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  /* Add any additional styling as per your requirement */
+}
 
 
 

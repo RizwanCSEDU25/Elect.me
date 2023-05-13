@@ -18,17 +18,19 @@ import { createContext } from 'react';
 import { useReducer } from 'react';
 import { initialState,reducer } from './reducer/UseReducer';
 import VoterList from './pages/VoterList';
+import FloatingButton from './components/FloatingButton';
 
 export const userContext = createContext();
 function App () {
  //const userContext = createContext();
  const [state, dispatch] = useReducer(reducer, initialState)
+ const shouldRenderButton = window.location.pathname !== '/help';
 
   return (
       <BrowserRouter> 
         
         <userContext.Provider value={{state,dispatch}}>
-        <Navbar />
+        {window.location.pathname.slice(0,5) !== '/cast' && window.location.pathname.slice(0,5) !== '/help' && <Navbar />}
         
         <div className='mydiv'>
           <Routes>
@@ -50,10 +52,12 @@ function App () {
             </Route>
             <Route path="*" element={<Error/>} />
           </Routes>
+          {shouldRenderButton && <FloatingButton />}
         </div>
         </userContext.Provider>
             
       </BrowserRouter>
+      
   );
 }
 
