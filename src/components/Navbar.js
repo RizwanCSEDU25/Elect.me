@@ -17,13 +17,13 @@ const Navbar = () => {
   
   const handleLogout = () => {
     
-    dispatch({type: "LOGOUT"});
+    dispatch({type: "USER", payload: false});
     localStorage.removeItem('token');
     setUser(useAuth())
 
     console.log(localStorage) 
     navigate('/signin');
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleClick = (e) => {

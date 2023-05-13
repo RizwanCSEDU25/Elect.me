@@ -40,7 +40,7 @@ const Signin = () => {
      console.log(data)
 
      if(data.token) {
-      dispatch({type:"LOGIN"})
+      dispatch({type:"USER", payload: true})
       localStorage.setItem('token', data.token)
       console.log(data.token)
       // window.location.href = '/dashboard'

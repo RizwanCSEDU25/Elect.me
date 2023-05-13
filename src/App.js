@@ -35,14 +35,6 @@ function App () {
         <div className='mydiv'>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/*" element={<PreventLoginPage />}>
-              <Route path="signup" element={<Signup/>} />
-              <Route path="signin" element={<Signin/>} />
-            </Route>
-            
-            <Route path="/vote" element={<VoterLogin/>} />
-            <Route path="/cast/:electId/:voterId" element={<VotingPage/>} />
-            <Route path="/help" element={<Help/>} />
             <Route path="/*" element={<PrivateOutlet />}>
               <Route path="dashboard" element={<Dashboard/>} />
               <Route path="result" element={<Result/>} />
@@ -50,6 +42,16 @@ function App () {
               <Route path="create" element={<CreatePoll/>} />
               
             </Route>
+            <Route path="/*" element={<PreventLoginPage />}>
+              <Route path="signup" element={<Signup/>} />
+              <Route path="signin" element={<Signin/>} />
+            </Route>
+
+            
+            <Route path="/vote" element={<VoterLogin/>} />
+            <Route path="/cast/:electId/:voterId" element={<VotingPage/>} />
+            <Route path="/help" element={<Help/>} />
+            
             <Route path="*" element={<Error/>} />
           </Routes>
           {shouldRenderButton && <FloatingButton />}
