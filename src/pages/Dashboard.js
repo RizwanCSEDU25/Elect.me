@@ -15,7 +15,7 @@ const Dashboard = () => {
   
   useEffect(() => {
     
-    fetch('https://plum-curious-katydid.cyclic.app/api/auth/polls',{headers: {
+    fetch('https://elect-server-opal.vercel.app/api/auth/polls',{headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+token,
     },}).then((res) => {
