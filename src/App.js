@@ -28,7 +28,7 @@ function App () {
       <BrowserRouter> 
         
         <userContext.Provider value={{state,dispatch}}>
-        {window.location.pathname.slice(0,5) !== '/cast' && <Navbar />}
+        <Navbar />
         
         <div className='mydiv'>
           <Routes>
